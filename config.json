@@ -1,0 +1,16 @@
+{
+    "name": "Kapoor Jewellers",
+    "goldSubcategory": [
+        "Ring",
+        "Necklace",
+        "Chain",
+        "Bracelet"
+    ],
+    "silverSubcategory": [
+        "Ring",
+        "Necklace",
+        "Chain",
+        "Bracelet"
+    ],
+    "local_env": true
+}
