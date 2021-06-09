@@ -100,8 +100,71 @@ def delete(id):
     delLedger = Ledger.query.filter_by(id=id).first()
     db.session.delete(delLedger)
     db.session.commit()
-
     return redirect("/")
+
+@app.route("/update/<int:id>", methods=['GET', 'POST'])
+def update(id):
+    if request.method == 'POST':
+        name = request.form.get("name").title()
+        category = request.form.get("category")
+
+        # Get values according to gold
+        if category == "Gold":
+            trade = request.form.get("buySellGold")
+            subcategory = request.form.get("goldSubCategory").capitalize()
+            weight = request.form.get("goldWeight")
+            rate = request.form.get("goldRate")
+
+        # Get values according to silver
+        elif category == "Silver":
+            trade = request.form.get("buySellSilver")
+            subcategory = request.form.get("silverSubCategory").capitalize()
+            weight = request.form.get("silverWeight")
+            rate = request.form.get("silverRate")
+
+        # Get values according to grocerie
+        elif category == "Grocery":
+            trade = request.form.get("buySellGrocerie")
+            subcategory = request.form.get("SubCatGrocerie").capitalize()
+            weight = request.form.get("grocQuantity")
+            rate = request.form.get("grocRate")
+
+        totalPrice = float(weight)*float(rate)
+        dateAdded = datetime.now().strftime("%d-%m-%y, %I:%M:%S %p")
+
+        # Get th particular item by id
+        ledger = Ledger.query.filter_by(id=id).first()
+
+        # Change according to form
+        ledger.name = name
+        ledger.category = category
+        ledger.subcategory = subcategory
+        ledger.trade = trade
+        ledger.weight = weight
+        ledger.rate = rate
+        ledger.totalPrice = totalPrice
+
+        # Change it from database
+        db.session.add(ledger)
+        db.session.commit()
+
+        # Redirects to home
+        return redirect("/")
+
+    goldItems = config["goldSubcategory"]
+    silverItems = config["silverSubcategory"]
+    
+    # Get element from database and send it to template
+    item = Ledger.query.filter_by(id=id).first()
+    print(item.category)
+    
+    return render_template(
+        "update.html",
+        id = id,
+        item = item,
+        goldItems = goldItems,
+        silverItems = silverItems
+    )
 
 if __name__ == '__main__':
     app.run(debug = config["local_env"], port=5000)

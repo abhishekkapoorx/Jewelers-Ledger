@@ -5,6 +5,7 @@
 {% endblock css %}
 
 {% block body %}
+
 <div class="container my-3">
     <h2 class="display-2">Kapoor Jewellers</h2>
     <div class="container my-4">
@@ -179,7 +180,7 @@
                                 <th scope="col">Category</th>
                                 <th scope="col">Subcategory</th>
                                 <th scope="col">Trade</th>
-                                <th scope="col">Weight</th>
+                                <th scope="col">Weight/Items</th>
                                 <th scope="col">Rate</th>
                                 <th scope="col">Total Price</th>
                                 <th scope="col">Date Added</th>
@@ -194,7 +195,7 @@
                                 <td>{{item.category}}</td>
                                 <td>{{item.subcategory}}</td>
                                 <td>{{item.trade}}</td>
-                                <td>{{item.weight}} g</td>
+                                <td>{{item.weight}}{% if item.category != "Grocery" %} g{% else %} items{% endif %}</td>
                                 <td>&#x20B9; {{item.rate}}</td>
                                 <td>&#x20B9; {{item.totalPrice}}</td>
                                 <td>{{item.dateAdded}}</td>
@@ -222,7 +223,7 @@
                                 <th scope="col">Category</th>
                                 <th scope="col">Subcategory</th>
                                 <th scope="col">Trade</th>
-                                <th scope="col">Weight</th>
+                                <th scope="col">Weight/Items</th>
                                 <th scope="col">Rate</th>
                                 <th scope="col">Total Price</th>
                                 <th scope="col">Date Added</th>
@@ -237,7 +238,7 @@
                                 <td>{{item.category}}</td>
                                 <td>{{item.subcategory}}</td>
                                 <td>{{item.trade}}</td>
-                                <td>{{item.weight}} g</td>
+                                <td>{{item.weight}}{% if item.category != "Grocery" %} g{% else %} items{% endif %}</td>
                                 <td>&#x20B9; {{item.rate}}</td>
                                 <td>&#x20B9; {{item.totalPrice}}</td>
                                 <td>{{item.dateAdded}}</td>
@@ -265,7 +266,7 @@
                                 <th scope="col">Category</th>
                                 <th scope="col">Subcategory</th>
                                 <th scope="col">Trade</th>
-                                <th scope="col">Weight</th>
+                                <th scope="col">Weight/Items</th>
                                 <th scope="col">Rate</th>
                                 <th scope="col">Total Price</th>
                                 <th scope="col">Date Added</th>
@@ -281,7 +282,7 @@
                                 <td>{{item.category}}</td>
                                 <td>{{item.subcategory}}</td>
                                 <td>{{item.trade}}</td>
-                                <td>{{item.weight}} g</td>
+                                <td>{{item.weight}}{% if item.category != "Grocery" %} g{% else %} items{% endif %}</td>
                                 <td>&#x20B9; {{item.rate}}</td>
                                 <td>&#x20B9; {{item.totalPrice}}</td>
                                 <td>{{item.dateAdded}}</td>
@@ -294,7 +295,7 @@
                                 <td>{{item.category}}</td>
                                 <td>{{item.subcategory}}</td>
                                 <td>{{item.trade}}</td>
-                                <td>{{item.weight}} g</td>
+                                <td>{{item.weight}}{% if item.category != "Grocery" %} g{% else %} items{% endif %}</td>
                                 <td>&#x20B9; {{item.rate}}</td>
                                 <td>&#x20B9; {{item.totalPrice}}</td>
                                 <td>{{item.dateAdded}}</td>
@@ -314,5 +315,14 @@
 
 
 {% block js %}
+<script>
+    var goldPrompt = document.getElementById("GoldPrompt");
+    var silverPrompt = document.getElementById("SilverPrompt");
+    var groceryPrompt = document.getElementById("GroceriePrompt");
+
+    // set displays of prompts to none
+    silverPrompt.style.display = "none";
+    groceryPrompt.style.display = "none";
+</script>
 <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 {% endblock js %}

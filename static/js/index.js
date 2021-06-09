@@ -2,9 +2,9 @@ var goldPrompt = document.getElementById("GoldPrompt");
 var silverPrompt = document.getElementById("SilverPrompt");
 var groceryPrompt = document.getElementById("GroceriePrompt");
 
-// set displays of prompts to none
-silverPrompt.style.display = "none";
-groceryPrompt.style.display = "none";
+// // set displays of prompts to none
+// silverPrompt.style.display = "none";
+// groceryPrompt.style.display = "none";
 
 // runs this func when clicked on category radios and sets their displays accordingly
 function checkRadio () {
