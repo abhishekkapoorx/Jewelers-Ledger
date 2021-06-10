@@ -20,6 +20,7 @@ elif config["loacl_env"] == False:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# Ledger class for maintaining records of sales and purchase of jewelery
 class Ledger(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -34,9 +35,94 @@ class Ledger(db.Model):
     def __repr__(self) -> str:
         return f"{self.name} - {self.category} - {self.trade}"
 
+# Class gold for daily incoming and outgoing gold
+class Gold(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    inOut = db.Column(db.String(15), nullable=False)
+    weight = db.Column(db.Integer, nullable=False)
+    dateAdded = db.Column(db.String(50), nullable=False)
 
+    def __repr__(self) -> str:
+        return f"{self.jewel_id} - {self.name} - {self.weight}"
+
+# Class cash for daily incoming and outgoing cash
+class Cash(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    inOut = db.Column(db.String(15), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    dateAdded = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self) -> str:
+        return f"{self.jewel_id} - {self.name} - {self.price}"
+
+# Routing Starts here
 @app.route("/", methods=['GET', 'POST'])
 def home():
+    # Query Data from database
+    goldIn = Gold.query.filter_by(inOut = "In").all()
+    goldOut = Gold.query.filter_by(inOut = "Out").all()
+    cashIn = Cash.query.filter_by(inOut = "In").all()
+    cashOut = Cash.query.filter_by(inOut = "Out").all()
+
+    return render_template(
+        "index.html",
+        goldIn = goldIn,
+        goldOut = goldOut,
+        cashIn =cashIn,
+        cashOut = cashOut
+    )
+
+@app.route("/addGold", methods=['GET', 'POST'])
+def addGold():
+    if request.method == 'POST':
+        # Get data from form
+        name = request.form.get("name").title()
+        inOut = request.form.get("inOut")
+        weight = request.form.get("weight")
+        dateAdded = datetime.now().strftime("%d-%m-%y, %I:%M:%S %p")
+
+        # Add data to database
+        gold = Gold(
+            name = name,
+            inOut = inOut,
+            weight = weight,
+            dateAdded = dateAdded
+        )
+
+        # Add it to db
+        db.session.add(gold)
+        db.session.commit()
+
+    return redirect("/")
+
+@app.route("/addCash", methods=['GET', 'POST'])
+def addCash():
+    if request.method == 'POST':
+        # Get data from form
+        name = request.form.get("name").title()
+        inOut = request.form.get("inOut")
+        price = request.form.get("cost")
+        dateAdded = datetime.now().strftime("%d-%m-%y, %I:%M:%S %p")
+
+        # Add data to database
+        cash = Cash(
+            name = name,
+            inOut = inOut,
+            price = price,
+            dateAdded = dateAdded
+        )
+
+        # Add it to db
+        db.session.add(cash)
+        db.session.commit()
+
+    return redirect("/")
+        
+
+@app.route("/Ledger", methods=['GET', 'POST'])
+def ledger_home():
     if request.method == 'POST':
         name = request.form.get("name").title()
         category = request.form.get("category")
@@ -87,7 +173,7 @@ def home():
     allTrade = Ledger.query.all()
 
     return render_template(
-        "index.html",
+        "ledger.html",
         silverItems = silverItems,
         goldItems = goldItems,
         sold = sold,
@@ -95,15 +181,29 @@ def home():
         allTrade = allTrade
     )
 
-@app.route("/delete/<int:id>")
-def delete(id):
+@app.route("/Ledger/delete/<int:id>")
+def ledger_delete(id):
     delLedger = Ledger.query.filter_by(id=id).first()
     db.session.delete(delLedger)
     db.session.commit()
+    return redirect("/था्ुाी")
+
+@app.route("/delGold/delete/<int:id>")
+def delGold(id):
+    delGold = Gold.query.filter_by(id=id).first()
+    db.session.delete(delGold)
+    db.session.commit()
     return redirect("/")
 
-@app.route("/update/<int:id>", methods=['GET', 'POST'])
-def update(id):
+@app.route("/delCash/delete/<int:id>")
+def delCash(id):
+    delCash = Cash.query.filter_by(id=id).first()
+    db.session.delete(delCash)
+    db.session.commit()
+    return redirect("/")
+
+@app.route("/Ledger/update/<int:id>", methods=['GET', 'POST'])
+def ledger_update(id):
     if request.method == 'POST':
         name = request.form.get("name").title()
         category = request.form.get("category")
@@ -130,7 +230,7 @@ def update(id):
             rate = request.form.get("grocRate")
 
         totalPrice = float(weight)*float(rate)
-        dateAdded = datetime.now().strftime("%d-%m-%y, %I:%M:%S %p")
+        # dateAdded = datetime.now().strftime("%d-%m-%y, %I:%M:%S %p")
 
         # Get th particular item by id
         ledger = Ledger.query.filter_by(id=id).first()

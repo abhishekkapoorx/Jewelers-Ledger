@@ -1,0 +1,328 @@
+{% extends 'base.html' %}
+{% block title %}Ledger{% endblock title %}
+{% block css %}
+
+{% endblock css %}
+
+{% block body %}
+
+<div class="container my-3">
+    <h2 class="display-2">Kapoor Jewellers Ledger</h2>
+    <div class="container my-4">
+        <form action="/Ledger" method="POST">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="InputName" name="name" aria-describedby="emailHelp"
+                    placeholder="Enter Name Here" required>
+                <label for="InputName">Sold To OR Purchased From</label>
+            </div>
+
+            <div class="mt-3 mb-1">
+                <h6 class="h6">Choose Product</h6>
+            </div>
+            <div class="form-check form-check-inline category">
+                <input class="form-check-input" type="radio" name="category" id="CatRadioGold" value="Gold"
+                    onclick="checkRadio()" checked>
+                <label class="form-check-label" for="CatRadioGold" onclick="checkRadio()">Gold</label>
+            </div>
+            <div class="form-check form-check-inline category">
+                <input class="form-check-input" type="radio" name="category" id="CatRadioSilver" value="Silver"
+                    onclick="checkRadio()">
+                <label class="form-check-label" for="CatRadioSilver" onclick="checkRadio()">Silver</label>
+            </div>
+            <div class="form-check form-check-inline category">
+                <input class="form-check-input" type="radio" name="category" id="CatRadioGrocerie" value="Grocery"
+                    onclick="checkRadio()">
+                <label class="form-check-label" for="CatRadioGrocerie" onclick="checkRadio()">Groceries or Other</label>
+            </div>
+
+
+            <!-- Shows if Gold is choosen -->
+            <div id="GoldPrompt" class="my-3">
+                <!-- Buy or Sell -->
+                <div class="mt-3 mb-1">
+                    <h6 class="h6">Buy or Sold Gold</h6>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="buySellGold" id="buySellGold1" value="Buy">
+                    <label class="form-check-label" for="buySellGold1">Buy</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="buySellGold" id="buySellGold2" value="Sold"
+                        checked>
+                    <label class="form-check-label" for="buySellGold2">Sold</label>
+                </div>
+
+                <!-- Get Weight And Rate -->
+                <div class="input-group mb-3 mt-3">
+                    <span class="input-group-text">Weight</span>
+                    <input type="number" step="0.001" class="form-control" placeholder="Enter Weight" name="goldWeight"
+                        aria-label="Username" value="0">
+                    <span class="input-group-text">g @ &#x20B9;</span>
+                    <input type="number" step="0.001" class="form-control" placeholder="Enter Rate" name="goldRate"
+                        aria-label="Server" value="0">
+                </div>
+                <label class="form-label" for="goldCategory">Subcategory</label>
+                <select class="form-select" aria-label="Default select example" id="goldSubCategory"
+                    name="goldSubCategory">
+                    {% for item in goldItems %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Shows if Silver is choosen -->
+            <div id="SilverPrompt" class="my-3">
+                <!-- Buy or Sell -->
+                <div class="mt-3 mb-1">
+                    <h6 class="h6">Buy or Sold Silver</h6>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="buySellSilver" id="buySellSilver1" value="Buy">
+                    <label class="form-check-label" for="buySellSilver1">Buy</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="buySellSilver" id="buySellSilver2" value="Sold"
+                        checked>
+                    <label class="form-check-label" for="buySellSilver2">Sold</label>
+                </div>
+
+                <!-- Get Weight And Rate -->
+                <div class="input-group mb-3 mt-3">
+                    <span class="input-group-text">Weight</span>
+                    <input type="number" step="0.001" class="form-control" placeholder="Enter Weight"
+                        name="silverWeight" aria-label="Username" value="0">
+                    <span class="input-group-text">g @ &#x20B9;</span>
+                    <input type="number" step="0.001" class="form-control" placeholder="Enter Rate" name="silverRate"
+                        aria-label="Server" value="0">
+                </div>
+                <label class="form-label" for="goldCategory">Subcategory</label>
+                <select class="form-select" aria-label="Default select example" id="silverSubCategory"
+                    name="silverSubCategory">
+                    {% for item in silverItems %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+
+            <!-- Shows if Groceries is choosen -->
+            <div id="GroceriePrompt" class="my-3">
+                <!-- Buy or Sell -->
+                <div class="mt-3 mb-1">
+                    <h6 class="h6">Buy Groceries</h6>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="buySellGrocerie" id="buySellGrocerie1"
+                        value="Buy" checked>
+                    <label class="form-check-label" for="buySellGrocerie1">Buy</label>
+                </div>
+
+                <!-- Get Subcategory -->
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="SubCatGrocerie" class="col-form-label">Product</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" id="SubCatGrocerie" name="SubCatGrocerie" class="form-control"
+                            aria-describedby="passwordHelpInline">
+                    </div>
+                    <div class="input-group mb-3 mt-3">
+                        <span class="input-group-text">Quantity</span>
+                        <input type="number" step="0.001" class="form-control" placeholder="Enter Quantity"
+                            name="grocQuantity" aria-label="Username" value="1">
+                        <span class="input-group-text">@ Price &#x20B9;</span>
+                        <input type="number" step="0.001" class="form-control" placeholder="Enter price" name="grocRate"
+                            aria-label="Username" value="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-3"><button type="submit" class="btn btn-dark">Submit</button></div>
+
+        </form>
+    </div>
+
+    <div class="container my-5">
+        <h3 class="mt-4 mb-2">Analize Data</h3>
+        <div class="container my-3">
+            <ul class="nav nav-tabs mb-3" id="tabs-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tabs-sold-tab" data-bs-toggle="tab"
+                        data-bs-target="#tabs-sold" type="button" role="tab" aria-controls="tabs-sold"
+                        aria-selected="true">Sold</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tabs-bought-tab" data-bs-toggle="tab" data-bs-target="#tabs-bought"
+                        type="button" role="tab" aria-controls="tabs-bought" aria-selected="false">Purchased</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tabs-allTrade-tab" data-bs-toggle="tab"
+                        data-bs-target="#tabs-allTrade" type="button" role="tab" aria-controls="tabs-allTrade"
+                        aria-selected="false">All Trade</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="tabs-tabContent">
+
+                <!-- Sold Panel -->
+                <div class="tab-pane fade show active" id="tabs-sold" role="tabpanel" aria-labelledby="tabs-sold-tab">
+                    <h4>Sold</h4>
+                    {% if sold|length == 0 %}
+                    <div class="alert alert-dark" role="alert">
+                        There is nothing in sold. Add first sold item now!!
+                    </div>
+                    {% else %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Subcategory</th>
+                                <th scope="col">Trade</th>
+                                <th scope="col">Weight/Items</th>
+                                <th scope="col">Rate</th>
+                                <th scope="col">Total Price</th>
+                                <th scope="col">Date Added</th>
+                                <th scope="col">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in sold %}
+                            <tr>
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{item.name}}</td>
+                                <td>{{item.category}}</td>
+                                <td>{{item.subcategory}}</td>
+                                <td>{{item.trade}}</td>
+                                <td>{{item.weight}}{% if item.category != "Grocery" %} g{% else %} items{% endif %}</td>
+                                <td>&#x20B9; {{item.rate}}</td>
+                                <td>&#x20B9; {{item.totalPrice}}</td>
+                                <td>{{item.dateAdded}}</td>
+                                <td><a href="/Ledger/update/{{item.id}}" class="btn btn-dark mx-1 my-1">Update</a><a href="/Ledger/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">Delete</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+
+                <!-- Bought Panel -->
+                <div class="tab-pane fade" id="tabs-bought" role="tabpanel" aria-labelledby="tabs-bought-tab">
+                    <h4>Purchased</h4>
+                    {% if bought|length == 0 %}
+                    <div class="alert alert-dark" role="alert">
+                        There is nothing in Purchased. Add first purchased item now!!
+                    </div>
+                    {% else %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Subcategory</th>
+                                <th scope="col">Trade</th>
+                                <th scope="col">Weight/Items</th>
+                                <th scope="col">Rate</th>
+                                <th scope="col">Total Price</th>
+                                <th scope="col">Date Added</th>
+                                <th scope="col">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in bought %}
+                            <tr>
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{item.name}}</td>
+                                <td>{{item.category}}</td>
+                                <td>{{item.subcategory}}</td>
+                                <td>{{item.trade}}</td>
+                                <td>{{item.weight}}{% if item.category != "Grocery" %} g{% else %} items{% endif %}</td>
+                                <td>&#x20B9; {{item.rate}}</td>
+                                <td>&#x20B9; {{item.totalPrice}}</td>
+                                <td>{{item.dateAdded}}</td>
+                                <td><a href="/Ledger/update/{{item.id}}" class="btn btn-dark mx-1 my-1">Update</a><a href="/Ledger/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">Delete</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+
+                <!-- All Trade Panel -->
+                <div class="tab-pane fade" id="tabs-allTrade" role="tabpanel" aria-labelledby="tabs-allTrade-tab">
+                    <h4>All Trade</h4>
+                    {% if allTrade|length == 0 %}
+                    <div class="alert alert-dark" role="alert">
+                        No Data Found. Add your first data now!!
+                    </div>
+                    {% else %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Subcategory</th>
+                                <th scope="col">Trade</th>
+                                <th scope="col">Weight/Items</th>
+                                <th scope="col">Rate</th>
+                                <th scope="col">Total Price</th>
+                                <th scope="col">Date Added</th>
+                                <th scope="col">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in allTrade %}
+                            {% if item.trade == "Buy" %}
+                            <tr class="table-danger">
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{item.name}}</td>
+                                <td>{{item.category}}</td>
+                                <td>{{item.subcategory}}</td>
+                                <td>{{item.trade}}</td>
+                                <td>{{item.weight}}{% if item.category != "Grocery" %} g{% else %} items{% endif %}</td>
+                                <td>&#x20B9; {{item.rate}}</td>
+                                <td>&#x20B9; {{item.totalPrice}}</td>
+                                <td>{{item.dateAdded}}</td>
+                                <td><a href="/Ledger/update/{{item.id}}" class="btn btn-dark mx-1 my-1">Update</a><a href="/Ledger/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">Delete</a></td>
+                            </tr>
+                            {% else %}
+                            <tr class="table-success">
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{item.name}}</td>
+                                <td>{{item.category}}</td>
+                                <td>{{item.subcategory}}</td>
+                                <td>{{item.trade}}</td>
+                                <td>{{item.weight}}{% if item.category != "Grocery" %} g{% else %} items{% endif %}</td>
+                                <td>&#x20B9; {{item.rate}}</td>
+                                <td>&#x20B9; {{item.totalPrice}}</td>
+                                <td>{{item.dateAdded}}</td>
+                                <td><a href="/Ledger/update/{{item.id}}" class="btn btn-dark mx-1 my-1">Update</a><a href="/Ledger/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">Delete</a></td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+
+{% block js %}
+<script>
+    var goldPrompt = document.getElementById("GoldPrompt");
+    var silverPrompt = document.getElementById("SilverPrompt");
+    var groceryPrompt = document.getElementById("GroceriePrompt");
+
+    // set displays of prompts to none
+    silverPrompt.style.display = "none";
+    groceryPrompt.style.display = "none";
+</script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock js %}
