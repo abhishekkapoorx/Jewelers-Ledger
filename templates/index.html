@@ -23,7 +23,7 @@
 
                 <!-- gold Panel -->
                 <div class="tab-pane fade show active" id="tabs-gold" role="tabpanel" aria-labelledby="tabs-gold-tab">
-                    <form action="/addGold" method="POST">
+                    <form action="/Gold" method="POST">
                         <div class="mb-3">
                             <label for="name_gold" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name_gold" name="name"
@@ -38,9 +38,10 @@
                             <label class="form-check-label" for="outGold">Out</label>
                         </div>
                         <div class="input-group my-3">
-                            <span class="input-group-text" id="weightGold">Weight</span>
+                            <span class="input-group-text" id="pre-weightGold">Weight</span>
                             <input type="number" class="form-control" placeholder="Enter Weight" aria-label="Username"
                                 aria-describedby="weightGold" step="0.001" name="weight" required>
+                                <span class="input-group-text" id="post-weightGold">g</span>
                         </div>
                         <button type="submit" class="btn btn-dark">Submit</button>
                     </form>
@@ -48,7 +49,7 @@
 
                 <!-- cash panel -->
                 <div class="tab-pane fade show" id="tabs-cash" role="tabpanel" aria-labelledby="tabs-cash-tab">
-                    <form action="/addCash" method="POST">
+                    <form action="/Cash" method="POST">
                         <div class="mb-3">
                             <label for="name_cash" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name_cash" name="name"
@@ -63,9 +64,10 @@
                             <label class="form-check-label" for="outCash">Out</label>
                         </div>
                         <div class="input-group my-3">
-                            <span class="input-group-text" id="costCash">Amount &#x20B9;</span>
+                            <span class="input-group-text" id="pre-costCash">Amount &#x20B9;</span>
                             <input type="number" class="form-control" placeholder="Enter Cost" aria-label="Username"
                                 aria-describedby="costCash" step="0.1" name="cost" required>
+                                <span class="input-group-text" id="post-costCash">/-</span>
                         </div>
                         <button type="submit" class="btn btn-dark">Submit</button>
                     </form>
@@ -118,10 +120,10 @@
                                         <td>{{item.weight}}</td>
                                         <td>{{item.dateAdded}}</td>
                                         <td>
-                                            <a href="/delGold/delete/{{item.id}}" class="btn btn-danger mx-2 my-2">
+                                            <a href="/Gold/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
                                                 Delete
                                             </a>
-                                            <a href="/updateGold/update/{{item.id}}" class="btn btn-dark mx-2 my-2">
+                                            <a href="/Gold/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
                                                 Update
                                             </a>
                                         </td>
@@ -156,10 +158,10 @@
                                         <td>{{item.weight}}</td>
                                         <td>{{item.dateAdded}}</td>
                                         <td>
-                                            <a href="/delGold/delete/{{item.id}}" class="btn btn-danger mx-2 my-2">
+                                            <a href="/Gold/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
                                                 Delete
                                             </a>
-                                            <a href="/updateGold/update/{{item.id}}" class="btn btn-dark mx-2 my-2">
+                                            <a href="/Gold/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
                                                 Update
                                             </a>
                                         </td>
@@ -194,10 +196,10 @@
                                         <td>{{item.price}}</td>
                                         <td>{{item.dateAdded}}</td>
                                         <td>
-                                            <a href="/delCash/delete/{{item.id}}" class="btn btn-danger mx-2 my-2">
+                                            <a href="/Cash/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
                                                 Delete
                                             </a>
-                                            <a href="/updateCash/update/{{item.id}}" class="btn btn-dark mx-2 my-2">
+                                            <a href="/Cash/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
                                                 Update
                                             </a>
                                         </td>
@@ -232,10 +234,10 @@
                                         <td>{{item.price}}</td>
                                         <td>{{item.dateAdded}}</td>
                                         <td>
-                                            <a href="/delCash/delete/{{item.id}}" class="btn btn-danger mx-2 my-2">
+                                            <a href="/Cash/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
                                                 Delete
                                             </a>
-                                            <a href="/updateCash/update/{{item.id}}" class="btn btn-dark mx-2 my-2">
+                                            <a href="/Cash/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
                                                 Update
                                             </a>
                                         </td>

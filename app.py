@@ -74,7 +74,7 @@ def home():
         cashOut = cashOut
     )
 
-@app.route("/addGold", methods=['GET', 'POST'])
+@app.route("/Gold", methods=['GET', 'POST'])
 def addGold():
     if request.method == 'POST':
         # Get data from form
@@ -97,7 +97,7 @@ def addGold():
 
     return redirect("/")
 
-@app.route("/addCash", methods=['GET', 'POST'])
+@app.route("/Cash", methods=['GET', 'POST'])
 def addCash():
     if request.method == 'POST':
         # Get data from form
@@ -186,16 +186,16 @@ def ledger_delete(id):
     delLedger = Ledger.query.filter_by(id=id).first()
     db.session.delete(delLedger)
     db.session.commit()
-    return redirect("/था्ुाी")
+    return redirect("/Ledger")
 
-@app.route("/delGold/delete/<int:id>")
+@app.route("/Gold/delete/<int:id>")
 def delGold(id):
     delGold = Gold.query.filter_by(id=id).first()
     db.session.delete(delGold)
     db.session.commit()
     return redirect("/")
 
-@app.route("/delCash/delete/<int:id>")
+@app.route("/Cash/delete/<int:id>")
 def delCash(id):
     delCash = Cash.query.filter_by(id=id).first()
     db.session.delete(delCash)
@@ -259,12 +259,82 @@ def ledger_update(id):
     print(item.category)
     
     return render_template(
-        "update.html",
+        "update_Ledger.html",
         id = id,
         item = item,
         goldItems = goldItems,
         silverItems = silverItems
     )
+
+@app.route("/Gold/update/<int:id>", methods=['GET', 'POST'])
+def gold_update(id):
+    inpQuan = "Weight" # For geting data from form dynamically
+
+    if request.method == 'POST':
+        # Get data from form
+        name = request.form.get("name").title()
+        inOut = request.form.get("inOut")
+        weight = request.form.get(inpQuan)
+
+        # Query data from form
+        upGold = Gold.query.filter_by(id = id).first()
+
+        # Update the data
+        upGold.name = name
+        upGold.inOut  = inOut
+        upGold.weight = weight
+
+        # Commit it to database
+        db.session.add(upGold)
+        db.session.commit()
+
+    # Send data from database into form
+    gold = Gold.query.filter_by(id = id).first()
+    inpQuanVal = float(gold.weight) # Convert the weight into float object and send it into form
+
+    return render_template(
+        "update_Cash_Gold.html",
+        category = "Gold",
+        id = id,
+        inpQuan = inpQuan,
+        inpQuanVal =inpQuanVal,
+        item = gold
+        )
+
+@app.route("/Cash/update/<int:id>", methods=['GET', 'POST'])
+def cash_update(id):
+    inpQuan = "Amount" # For geting data from form dynamically
+
+    if request.method == 'POST':
+        # Get data from form
+        name = request.form.get("name").title()
+        inOut = request.form.get("inOut")
+        price = request.form.get(inpQuan)
+
+        # Query data from form
+        upCash = Gold.query.filter_by(id = id).first()
+
+        # Update the data
+        upCash.name = name
+        upCash.inOut  = inOut
+        upCash.weight = price
+
+        # Commit it to database
+        db.session.add(upCash)
+        db.session.commit()
+
+    # Send data from database into form
+    cash = Cash.query.filter_by(id = id).first()
+    inpQuanVal = float(cash.price) # Convert the price into float object and send it into form
+
+    return render_template(
+        "update_Cash_Gold.html",
+        category = "Cash",
+        id = id,
+        inpQuan = inpQuan,
+        inpQuanVal = inpQuanVal,
+        item = cash
+        )
 
 if __name__ == '__main__':
     app.run(debug = config["local_env"], port=5000)

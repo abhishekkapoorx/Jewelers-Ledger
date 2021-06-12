@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Update {{ category }} Item{% endblock title %}
+{% block css %}
+
+{% endblock css %}
+
+
+{% block body %}
+<div class="container my-4">
+    <h3 class="display-3 mb-3">Update {{category}} Item</h3>
+    <form action="/{{ category }}/update/{{ id }}" method="POST">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp"
+                placeholder="Enter Name" value="{{item.name}}" required>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inOut" id="in" value="In" {% if item.inOut=="In"
+                %}checked{% endif %} required>
+            <label class="form-check-label" for="in">In</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inOut" id="out" value="Out" {% if item.inOut=="Out"
+                %}checked{% endif %} required>
+            <label class="form-check-label" for="out">Out</label>
+        </div>
+        <div class="input-group my-3">
+            <span class="input-group-text" id="pre-{{inpQuan}}">{{inpQuan}} {% if category == "Gold" %}&#x20B9;{% endif %}</span>
+            <input type="number" class="form-control" placeholder="Enter {{inpQuan}}" aria-label="Username"
+                aria-describedby="{{inpQuan}}" step="0.001" name="{{inpQuan}}" value="{{inpQuanVal}}" required>
+            <span class="input-group-text" id="post{{inpQuan}}">
+                {% if category == "Gold" %}
+                    g
+                {% else %}
+                    /-
+                {% endif %}
+            </span>
+        </div>
+        <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
+</div>
+{% endblock body %}
+
+
+{% block js %}
+
+{% endblock js %}
