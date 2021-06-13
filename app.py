@@ -139,8 +139,6 @@ def home():
         DATA["Gold Balance"] = DATA["Gold In"] - DATA["Gold Out"]
         DATA["Cash Balance"] = DATA["Cash In"] - DATA["Cash Out"]
 
-        print(f"\n {DATA} \n")
-
         return render_template(
             "index.html",
             goldIn = goldIn,
@@ -354,7 +352,6 @@ def ledger_update(id):
         
         # Get element from database and send it to template
         item = Ledger.query.filter_by(id=id).first()
-        print(item.category)
         
         return render_template(
             "update_Ledger.html",
