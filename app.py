@@ -14,7 +14,7 @@ with open("config.json", "rb") as confile:
 if config["local_env"] == True:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ledger.db'
     app.config['SECRET_KEY'] = '379db29fe33c2812e94897d01726b771755ce5893472ca6b0c9fe020e3047226a2e3'
-elif config["loacl_env"] == False:
+else:
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI")
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
