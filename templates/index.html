@@ -41,7 +41,7 @@
                             <span class="input-group-text" id="pre-weightGold">Weight</span>
                             <input type="number" class="form-control" placeholder="Enter Weight" aria-label="Username"
                                 aria-describedby="weightGold" step="0.001" name="weight" required>
-                                <span class="input-group-text" id="post-weightGold">g</span>
+                            <span class="input-group-text" id="post-weightGold">g</span>
                         </div>
                         <button type="submit" class="btn btn-dark">Submit</button>
                     </form>
@@ -67,13 +67,37 @@
                             <span class="input-group-text" id="pre-costCash">Amount &#x20B9;</span>
                             <input type="number" class="form-control" placeholder="Enter Cost" aria-label="Username"
                                 aria-describedby="costCash" step="0.1" name="cost" required>
-                                <span class="input-group-text" id="post-costCash">/-</span>
+                            <span class="input-group-text" id="post-costCash">/-</span>
                         </div>
                         <button type="submit" class="btn btn-dark">Submit</button>
                     </form>
                 </div>
             </div>
 
+
+            <div class="container my-4">
+                <h3 class="mt-5 mb-2">
+                    Your Balance
+                </h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Data</th>
+                            <th scope="col">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key, value in DATA.items() %}
+                        <tr id="row-{{key|replace(" ", " -")}}">
+                            <th scope="row">{{key}}</th>
+                            <td id="col-{{key|replace(" ", " -")}}">{{value}}</td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
             <div class="container my-4">
                 <h3 class="mt-5 mb-2">Your Data</h3>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -98,153 +122,153 @@
                     <div class="tab-pane fade show active" id="GoldIn" role="tabpanel" aria-labelledby="GoldIn-tab">
                         <h4 class="my-3">Gold In</h4>
                         {% if goldIn|length == 0 %}
-                            <div class="alert alert-dark" role="alert">
-                                There is no data. Add your first data now!!
-                            </div>
+                        <div class="alert alert-dark" role="alert">
+                            There is no data. Add your first data now!!
+                        </div>
                         {% else %}
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Weight</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Operations</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for item in goldIn %}
-                                    <tr>
-                                        <th scope="row">{{loop.index}}</th>
-                                        <td>{{item.name}}</td>
-                                        <td>{{item.weight}}</td>
-                                        <td>{{item.dateAdded}}</td>
-                                        <td>
-                                            <a href="/Gold/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
-                                                Delete
-                                            </a>
-                                            <a href="/Gold/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
-                                                Update
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>    
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Weight</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Operations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in goldIn %}
+                                <tr>
+                                    <th scope="row">{{loop.index}}</th>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.weight}}</td>
+                                    <td>{{item.dateAdded}}</td>
+                                    <td>
+                                        <a href="/Gold/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
+                                            Delete
+                                        </a>
+                                        <a href="/Gold/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
+                                            Update
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                         {% endif %}
                     </div>
                     <div class="tab-pane fade" id="GoldOut" role="tabpanel" aria-labelledby="GoldOut-tab">
                         <h4 class="my-3">Gold Out</h4>
                         {% if goldOut|length == 0 %}
-                            <div class="alert alert-dark" role="alert">
-                                There is no data. Add your first data now!!
-                            </div>
+                        <div class="alert alert-dark" role="alert">
+                            There is no data. Add your first data now!!
+                        </div>
                         {% else %}
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Weight</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Operations</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for item in goldOut %}
-                                    <tr>
-                                        <th scope="row">{{loop.index}}</th>
-                                        <td>{{item.name}}</td>
-                                        <td>{{item.weight}}</td>
-                                        <td>{{item.dateAdded}}</td>
-                                        <td>
-                                            <a href="/Gold/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
-                                                Delete
-                                            </a>
-                                            <a href="/Gold/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
-                                                Update
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>    
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Weight</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Operations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in goldOut %}
+                                <tr>
+                                    <th scope="row">{{loop.index}}</th>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.weight}}</td>
+                                    <td>{{item.dateAdded}}</td>
+                                    <td>
+                                        <a href="/Gold/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
+                                            Delete
+                                        </a>
+                                        <a href="/Gold/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
+                                            Update
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                         {% endif %}
                     </div>
                     <div class="tab-pane fade" id="CashIn" role="tabpanel" aria-labelledby="CashIn-tab">
                         <h4 class="my-3">Cash In</h4>
                         {% if cashIn|length == 0 %}
-                            <div class="alert alert-dark" role="alert">
-                                There is no data. Add your first data now!!
-                            </div>
+                        <div class="alert alert-dark" role="alert">
+                            There is no data. Add your first data now!!
+                        </div>
                         {% else %}
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Operations</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for item in cashIn %}
-                                    <tr>
-                                        <th scope="row">{{loop.index}}</th>
-                                        <td>{{item.name}}</td>
-                                        <td>{{item.price}}</td>
-                                        <td>{{item.dateAdded}}</td>
-                                        <td>
-                                            <a href="/Cash/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
-                                                Delete
-                                            </a>
-                                            <a href="/Cash/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
-                                                Update
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>    
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Operations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cashIn %}
+                                <tr>
+                                    <th scope="row">{{loop.index}}</th>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.price}}</td>
+                                    <td>{{item.dateAdded}}</td>
+                                    <td>
+                                        <a href="/Cash/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
+                                            Delete
+                                        </a>
+                                        <a href="/Cash/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
+                                            Update
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                         {% endif %}
                     </div>
                     <div class="tab-pane fade" id="CashOut" role="tabpanel" aria-labelledby="CashOut-tab">
                         <h4 class="my-3">Cash Out</h4>
                         {% if cashOut|length == 0 %}
-                            <div class="alert alert-dark" role="alert">
-                                There is no data. Add your first data now!!
-                            </div>
+                        <div class="alert alert-dark" role="alert">
+                            There is no data. Add your first data now!!
+                        </div>
                         {% else %}
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Operations</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for item in cashOut %}
-                                    <tr>
-                                        <th scope="row">{{loop.index}}</th>
-                                        <td>{{item.name}}</td>
-                                        <td>{{item.price}}</td>
-                                        <td>{{item.dateAdded}}</td>
-                                        <td>
-                                            <a href="/Cash/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
-                                                Delete
-                                            </a>
-                                            <a href="/Cash/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
-                                                Update
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>    
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Operations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cashOut %}
+                                <tr>
+                                    <th scope="row">{{loop.index}}</th>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.price}}</td>
+                                    <td>{{item.dateAdded}}</td>
+                                    <td>
+                                        <a href="/Cash/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
+                                            Delete
+                                        </a>
+                                        <a href="/Cash/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
+                                            Update
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                         {% endif %}
                     </div>
                 </div>
@@ -253,5 +277,21 @@
         {% endblock body %}
 
         {% block js %}
+        <script>
+            // Change color of Gold Balance row
+            if (document.getElementById("col-Gold-Balance").innerHTML < 0) {
+                document.getElementById("row-Gold-Balance").setAttribute("class", "table-danger");
+            }
+            else if (document.getElementById("col-Gold-Balance").innerHTML > 0) {
+                document.getElementById("row-Gold-Balance").setAttribute("class", "table-success");
+            };
 
+            // Change color of Gold Balance row
+            if (document.getElementById("col-Cash-Balance").innerHTML < 0) {
+                document.getElementById("row-Cash-Balance").setAttribute("class", "table-danger");
+            }
+            else if (document.getElementById("col-Cash-Balance").innerHTML > 0) {
+                document.getElementById("row-Cash-Balance").setAttribute("class", "table-success");
+            };
+        </script>
         {% endblock js %}

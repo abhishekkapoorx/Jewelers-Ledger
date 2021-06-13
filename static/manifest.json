@@ -1,0 +1,52 @@
+{
+  "short_name": "Kapoor Jewelers",
+  "name": "Kapoor Jewelers",
+  "icons": [
+    {
+      "src": "/static/img/logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/static/img/logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "display_override": [
+    "window-control-overlay",
+    "minimal-ui"
+  ],
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#000000",
+  "shortcuts": [
+    {
+      "name": "Welcome to Kapoor Jewelers Home",
+      "short_name": "Home",
+      "description": "Welcome to Kapoor Jewelers Home",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/static/img/logo-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Ledger in Kapoor Jewelers",
+      "short_name": "Ledger",
+      "description": "Ledger in Kapoor Jewelers",
+      "url": "/Ledger",
+      "icons": [
+        {
+          "src": "/static/img/logo-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "description": "Manage and View Balances of Ledger - Kapoor Jewelers"
+}

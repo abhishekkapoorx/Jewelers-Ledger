@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}{{ response["code"] }} Error{% endblock title %}
+{% block css %}
+    <style>
+        *{
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+        .error-main{
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+        .error-main::before{
+            content: "{{response["code"]}}";
+            position: absolute;
+            font-size: 25rem;
+            font-weight: 900;
+            color: rgb(212, 212, 212);
+            z-index: -2;
+            opacity: 0.5;
+            text-align: center;
+
+            animation: popup 1s ease-in-out 0.5s 1 normal both;
+        }
+
+        @media screen and (max-width: 400px) {
+            .error-main::before{
+                font-size: 12rem;
+            }
+        }
+
+        @media screen and (min-width: 400px) and (max-width: 750px) {
+            .error-main::before{
+                font-size: 17rem;
+            }
+        }
+        @keyframes popup {
+            0%{
+                transform: scale(0);
+            }
+            95%{
+                transform: scale(1.1);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+
+        .err-name{
+            max-width: 80vw;
+        }
+        .err-desc{
+            max-width: 90vw;
+            font-size: 1.2rem;
+        }
+    </style>
+{% endblock css %}
+
+{% block body %}
+    <div class="error-main">
+        <h1 class="err-name display-1">{{ response["code"] }} - {{ response["name"] }} Error</h1>
+        <div class="err-desc mt-2">{{response["description"]}}</div>
+        <a href="/" class="btn btn-dark mt-2">Return to Home</a>
+    </div>
+{% endblock body %}
