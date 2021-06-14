@@ -345,7 +345,7 @@ def ledger_update(id):
             db.session.commit()
 
             # Redirects to home
-            return redirect("/")
+            return redirect("/Ledger")
 
         goldItems = config["goldSubcategory"]
         silverItems = config["silverSubcategory"]
@@ -386,6 +386,8 @@ def gold_update(id):
             db.session.add(upGold)
             db.session.commit()
 
+            return redirect("/")
+
         # Send data from database into form
         gold = Gold.query.filter_by(id = id).first()
         inpQuanVal = float(gold.weight) # Convert the weight into float object and send it into form
@@ -423,6 +425,8 @@ def cash_update(id):
             # Commit it to database
             db.session.add(upCash)
             db.session.commit()
+
+            return redirect("/")
 
         # Send data from database into form
         cash = Cash.query.filter_by(id = id).first()
