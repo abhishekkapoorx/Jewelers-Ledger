@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-   <!-- Required meta tags -->
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,10 +23,38 @@
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
     <title>{% block title %}{% endblock title %} - Kapoor Jewellers</title>
+
+    <!-- Global CSS  -->
+    <style>
+        *::selection {
+            color: white !important;
+            background-color: #212529 !important;
+        }
+
+        .mgLogout-in {
+            margin: auto 4px;
+        }
+
+        @media screen and (max-width:300px) {
+            .toggleHide-300px {
+                display: none !important;
+            }
+        }
+
+        @media screen and (min-width:300px) and (max-width:500px) {
+            .toggleHide-500px {
+                display: none !important;
+            }
+
+            .mgLogout-in {
+                margin: auto 0;
+            }
+        }
+    </style>
     {% block css %}
-        
+
     {% endblock css %}
-    
+
 </head>
 
 <body>
@@ -58,7 +86,7 @@
     </nav>
 
     {% block body %}
-        
+
     {% endblock body %}
 
     <!-- app & Install JavaScript -->
@@ -80,7 +108,7 @@
 
     <!-- Site JSBelow -->
     {% block js %}
-        
+
     {% endblock js %}
 </body>
 

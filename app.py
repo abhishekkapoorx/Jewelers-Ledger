@@ -159,7 +159,7 @@ def addGold():
             name = request.form.get("name").title()
             inOut = request.form.get("inOut")
             weight = request.form.get("weight")
-            dateAdded = datetime.now().strftime("%d-%m-%y, %I:%M:%S %p")
+            dateAdded = datetime.now().strftime("%d-%m-%y")
 
             # Add data to database
             gold = Gold(
@@ -185,7 +185,7 @@ def addCash():
             name = request.form.get("name").title()
             inOut = request.form.get("inOut")
             price = request.form.get("cost")
-            dateAdded = datetime.now().strftime("%d-%m-%y, %I:%M:%S %p")
+            dateAdded = datetime.now().strftime("%d-%m-%y")
 
             # Add data to database
             cash = Cash(
@@ -233,7 +233,7 @@ def ledger_home():
                 rate = request.form.get("grocRate")
 
             totalPrice = float(weight)*float(rate)
-            dateAdded = datetime.now().strftime("%d-%m-%y, %I:%M:%S %p")
+            dateAdded = datetime.now().strftime("%d-%m-%y")
 
             ledger = Ledger(
                 name = name,
@@ -326,7 +326,7 @@ def ledger_update(id):
                 rate = request.form.get("grocRate")
 
             totalPrice = float(weight)*float(rate)
-            # dateAdded = datetime.now().strftime("%d-%m-%y, %I:%M:%S %p")
+            # dateAdded = datetime.now().strftime("%d-%m-%y")
 
             # Get th particular item by id
             ledger = Ledger.query.filter_by(id=id).first()
