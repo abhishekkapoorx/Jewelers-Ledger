@@ -10,20 +10,20 @@ var groceryPrompt = document.getElementById("GroceriePrompt");
 function remReqGold(){
     document.getElementById("buySellGold1").removeAttribute("required");
     document.getElementById("buySellGold2").removeAttribute("required");
-    document.getElementsByName("goldWeight").removeAttribute("required");
-    document.getElementsByName("goldRate").removeAttribute("required");
+    document.getElementById("goldWeight").removeAttribute("required");
+    document.getElementById("goldRate").removeAttribute("required");
 };
 function remReqSilver(){
     document.getElementById("buySellSilver1").removeAttribute("required");
     document.getElementById("buySellSilver2").removeAttribute("required");
-    document.getElementsByName("silverWeight").removeAttribute("required");
-    document.getElementsByName("silverRate").removeAttribute("required");
+    document.getElementById("silverWeight").removeAttribute("required");
+    document.getElementById("silverRate").removeAttribute("required");
 };
 function remReqGroc(){
     document.getElementById("buySellGrocerie1").removeAttribute("required");
     document.getElementById("SubCatGrocerie").removeAttribute("required");
-    document.getElementsByName("grocQuantity").removeAttribute("required");
-    document.getElementsByName("grocRate").removeAttribute("required");  
+    document.getElementById("grocQuantity").removeAttribute("required");
+    document.getElementById("grocRate").removeAttribute("required");  
 };
 
 // runs this func when clicked on category radios and sets their displays accordingly
@@ -34,8 +34,8 @@ function checkRadio () {
         groceryPrompt.style.display = "none";
         document.getElementById("buySellGold1").setAttribute("required", "");
         document.getElementById("buySellGold2").setAttribute("required", "");
-        document.getElementsByName("goldWeight").setAttribute("required", "");
-        document.getElementsByName("goldRate").setAttribute("required", "");
+        document.getElementById("goldWeight").setAttribute("required", "");
+        document.getElementById("goldRate").setAttribute("required", "");
         remReqSilver();
         remReqGroc();
     }
@@ -45,8 +45,8 @@ function checkRadio () {
         groceryPrompt.style.display = "none";
         document.getElementById("buySellSilver1").setAttribute("required", "");
         document.getElementById("buySellSilver2").setAttribute("required", "");
-        document.getElementsByName("silverWeight").setAttribute("required", "");
-        document.getElementsByName("silverRate").setAttribute("required", "");
+        document.getElementById("silverWeight").setAttribute("required", "");
+        document.getElementById("silverRate").setAttribute("required", "");
         remReqGold();
         remReqGroc();
     }
@@ -56,8 +56,8 @@ function checkRadio () {
         groceryPrompt.style.display = "block";
         document.getElementById("buySellGrocerie1").setAttribute("required", "");
         document.getElementById("SubCatGrocerie").setAttribute("required", "");
-        document.getElementsByName("grocQuantity").setAttribute("required", "");
-        document.getElementsByName("grocRate").setAttribute("required", "");
+        document.getElementById("grocQuantity").setAttribute("required", "");
+        document.getElementById("grocRate").setAttribute("required", "");
         remReqGold();
         remReqSilver();
     }
