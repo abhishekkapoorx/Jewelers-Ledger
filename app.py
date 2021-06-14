@@ -28,9 +28,9 @@ class Ledger(db.Model):
     category = db.Column(db.String(100), nullable=False)
     trade = db.Column(db.String(50), nullable=False)
     subcategory = db.Column(db.String(100), nullable=False)
-    weight = db.Column(db.Integer, nullable=False)
-    rate = db.Column(db.Integer, nullable=False)
-    totalPrice = db.Column(db.Integer, nullable=False)
+    weight = db.Column(db.Float, nullable=False)
+    rate = db.Column(db.Float, nullable=False)
+    totalPrice = db.Column(db.Float, nullable=False)
     dateAdded = db.Column(db.String(50), nullable=False)
 
     def __repr__(self) -> str:
@@ -41,7 +41,7 @@ class Gold(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     inOut = db.Column(db.String(15), nullable=False)
-    weight = db.Column(db.Integer, nullable=False)
+    weight = db.Column(db.Float, nullable=False)
     dateAdded = db.Column(db.String(50), nullable=False)
 
     def __repr__(self) -> str:
@@ -52,7 +52,7 @@ class Cash(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     inOut = db.Column(db.String(15), nullable=False)
-    price = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Float, nullable=False)
     dateAdded = db.Column(db.String(50), nullable=False)
 
     def __repr__(self) -> str:
