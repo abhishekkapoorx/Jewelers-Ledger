@@ -88,9 +88,9 @@
                     </thead>
                     <tbody>
                         {% for key, value in DATA.items() %}
-                        <tr id="row-{{key|replace(" ", " -")}}">
+                        <tr id="row-{{key|replace(" ", "-")}}">
                             <th scope="row">{{key}}</th>
-                            <td id="col-{{key|replace(" ", " -")}}">{{value}}</td>
+                            <td id="col-{{key|replace(" ", "-")}}">{{value}}</td>
                         </tr>
 
                         {% endfor %}
