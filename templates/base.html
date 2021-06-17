@@ -13,6 +13,7 @@
     <meta name="apple-mobile-web-app-title" content="Kapoor Jewelers">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="black">
 
     <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
 
@@ -25,32 +26,7 @@
     <title>{% block title %}{% endblock title %} - Kapoor Jewellers</title>
 
     <!-- Global CSS  -->
-    <style>
-        *::selection {
-            color: white !important;
-            background-color: #212529 !important;
-        }
-
-        .mgLogout-in {
-            margin: auto 4px;
-        }
-
-        @media screen and (max-width:300px) {
-            .toggleHide-300px {
-                display: none !important;
-            }
-        }
-
-        @media screen and (min-width:300px) and (max-width:500px) {
-            .toggleHide-500px {
-                display: none !important;
-            }
-
-            .mgLogout-in {
-                margin: auto 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block css %}
 
     {% endblock css %}

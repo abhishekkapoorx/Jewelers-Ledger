@@ -9,20 +9,20 @@
     <h2 class="display-2">Welcome to Kapoor Jewelers</h2>
     <div class="container mt-4">
         <div class="container my-3">
-            <ul class="nav nav-tabs mb-3" id="tabs-tab" role="tablist">
+            <ul class="nav nav-pills mb-3" id="pills-pill" role="pilllist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="tabs-gold-tab" data-bs-toggle="tab" data-bs-target="#tabs-gold"
-                        type="button" role="tab" aria-controls="tabs-gold" aria-selected="true">Gold</button>
+                    <button class="nav-link active" id="pills-gold-pill" data-bs-toggle="pill" data-bs-target="#pills-gold"
+                        type="button" role="pill" aria-controls="pills-gold" aria-selected="true">Gold</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tabs-cash-tab" data-bs-toggle="tab" data-bs-target="#tabs-cash"
-                        type="button" role="tab" aria-controls="tabs-cash" aria-selected="false">Cash</button>
+                    <button class="nav-link" id="pills-cash-pill" data-bs-toggle="pill" data-bs-target="#pills-cash"
+                        type="button" role="pill" aria-controls="pills-cash" aria-selected="false">Cash</button>
                 </li>
             </ul>
-            <div class="tab-content" id="tabs-tabContent">
+            <div class="tab-content" id="pills-tabContent">
 
                 <!-- gold Panel -->
-                <div class="tab-pane fade show active" id="tabs-gold" role="tabpanel" aria-labelledby="tabs-gold-tab">
+                <div class="tab-pane fade show active" id="pills-gold" role="tabpanel" aria-labelledby="pills-gold-tab">
                     <form action="/Gold" method="POST">
                         <div class="mb-3">
                             <label for="name_gold" class="form-label">Name</label>
@@ -48,7 +48,7 @@
                 </div>
 
                 <!-- cash panel -->
-                <div class="tab-pane fade show" id="tabs-cash" role="tabpanel" aria-labelledby="tabs-cash-tab">
+                <div class="tab-pane fade show" id="pills-cash" role="tabpanel" aria-labelledby="pills-cash-tab">
                     <form action="/Cash" method="POST">
                         <div class="mb-3">
                             <label for="name_cash" class="form-label">Name</label>
@@ -100,26 +100,26 @@
             </div>
             <div class="container my-4">
                 <h3 class="mt-5 mb-2">Your Data</h3>
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <ul class="nav nav-pills" id="mypill" role="pilllist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="GoldIn-tab" data-bs-toggle="tab" data-bs-target="#GoldIn"
-                            type="button" role="tab" aria-controls="GoldIn" aria-selected="true">Gold In</button>
+                        <button class="nav-link active" id="GoldIn-pill" data-bs-toggle="pill" data-bs-target="#GoldIn"
+                            type="button" role="pill" aria-controls="GoldIn" aria-selected="true">Gold In</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="GoldOut-tab" data-bs-toggle="tab" data-bs-target="#GoldOut"
-                            type="button" role="tab" aria-controls="GoldOut" aria-selected="false">Gold Out</button>
+                        <button class="nav-link" id="GoldOut-pill" data-bs-toggle="pill" data-bs-target="#GoldOut"
+                            type="button" role="pill" aria-controls="GoldOut" aria-selected="false">Gold Out</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="CashIn-tab" data-bs-toggle="tab" data-bs-target="#CashIn"
-                            type="button" role="tab" aria-controls="CashIn" aria-selected="false">Cash In</button>
+                        <button class="nav-link" id="CashIn-pill" data-bs-toggle="pill" data-bs-target="#CashIn"
+                            type="button" role="pill" aria-controls="CashIn" aria-selected="false">Cash In</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="CashOut-tab" data-bs-toggle="tab" data-bs-target="#CashOut"
-                            type="button" role="tab" aria-controls="CashOut" aria-selected="false">Cash Out</button>
+                        <button class="nav-link" id="CashOut-pill" data-bs-toggle="pill" data-bs-target="#CashOut"
+                            type="button" role="pill" aria-controls="CashOut" aria-selected="false">Cash Out</button>
                     </li>
                 </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="GoldIn" role="tabpanel" aria-labelledby="GoldIn-tab">
+                <div class="tab-content" id="pills-myTabContent">
+                    <div class="tab-pane fade show active" id="GoldIn" role="tabpanel" aria-labelledby="pills-GoldIn-tab">
                         <h4 class="my-3">Gold In</h4>
                         {% if goldIn|length == 0 %}
                         <div class="alert alert-dark" role="alert">
@@ -157,7 +157,7 @@
                         </table>
                         {% endif %}
                     </div>
-                    <div class="tab-pane fade" id="GoldOut" role="tabpanel" aria-labelledby="GoldOut-tab">
+                    <div class="tab-pane fade" id="pills-GoldOut" role="tabpanel" aria-labelledby="pills-GoldOut-tab">
                         <h4 class="my-3">Gold Out</h4>
                         {% if goldOut|length == 0 %}
                         <div class="alert alert-dark" role="alert">
@@ -195,7 +195,7 @@
                         </table>
                         {% endif %}
                     </div>
-                    <div class="tab-pane fade" id="CashIn" role="tabpanel" aria-labelledby="CashIn-tab">
+                    <div class="tab-pane fade" id="pills-CashIn" role="tabpanel" aria-labelledby="pills-CashIn-tab">
                         <h4 class="my-3">Cash In</h4>
                         {% if cashIn|length == 0 %}
                         <div class="alert alert-dark" role="alert">
@@ -233,7 +233,7 @@
                         </table>
                         {% endif %}
                     </div>
-                    <div class="tab-pane fade" id="CashOut" role="tabpanel" aria-labelledby="CashOut-tab">
+                    <div class="tab-pane fade" id="pills-CashOut" role="tabpanel" aria-labelledby="pills-CashOut-tab">
                         <h4 class="my-3">Cash Out</h4>
                         {% if cashOut|length == 0 %}
                         <div class="alert alert-dark" role="alert">

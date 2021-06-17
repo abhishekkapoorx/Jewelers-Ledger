@@ -144,26 +144,26 @@
     <div class="container my-5">
         <h3 class="mt-4 mb-2">Analize Data</h3>
         <div class="container my-3">
-            <ul class="nav nav-tabs mb-3" id="tabs-tab" role="tablist">
+            <ul class="nav nav-pills mb-3" id="pills-pill" role="pilllist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="tabs-sold-tab" data-bs-toggle="tab"
-                        data-bs-target="#tabs-sold" type="button" role="tab" aria-controls="tabs-sold"
+                    <button class="nav-link active" id="pills-sold-pill" data-bs-toggle="pill"
+                        data-bs-target="#pills-sold" type="button" role="pill" aria-controls="pills-sold"
                         aria-selected="true">Sold</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tabs-bought-tab" data-bs-toggle="tab" data-bs-target="#tabs-bought"
-                        type="button" role="tab" aria-controls="tabs-bought" aria-selected="false">Purchased</button>
+                    <button class="nav-link" id="pills-bought-pill" data-bs-toggle="pill" data-bs-target="#pills-bought"
+                        type="button" role="pill" aria-controls="pills-bought" aria-selected="false">Purchased</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tabs-allTrade-tab" data-bs-toggle="tab"
-                        data-bs-target="#tabs-allTrade" type="button" role="tab" aria-controls="tabs-allTrade"
+                    <button class="nav-link" id="pills-allTrade-pill" data-bs-toggle="pill"
+                        data-bs-target="#pills-allTrade" type="button" role="pill" aria-controls="pills-allTrade"
                         aria-selected="false">All Trade</button>
                 </li>
             </ul>
-            <div class="tab-content" id="tabs-tabContent">
+            <div class="tab-content" id="pills-tabContent">
 
                 <!-- Sold Panel -->
-                <div class="tab-pane fade show active" id="tabs-sold" role="tabpanel" aria-labelledby="tabs-sold-tab">
+                <div class="tab-pane fade show active" id="pills-sold" role="tabpanel" aria-labelledby="pills-sold-tab">
                     <h4>Sold</h4>
                     {% if sold|length == 0 %}
                     <div class="alert alert-dark" role="alert">
@@ -206,7 +206,7 @@
                 </div>
 
                 <!-- Bought Panel -->
-                <div class="tab-pane fade" id="tabs-bought" role="tabpanel" aria-labelledby="tabs-bought-tab">
+                <div class="tab-pane fade" id="pills-bought" role="tabpanel" aria-labelledby="pills-bought-tab">
                     <h4>Purchased</h4>
                     {% if bought|length == 0 %}
                     <div class="alert alert-dark" role="alert">
@@ -249,7 +249,7 @@
                 </div>
 
                 <!-- All Trade Panel -->
-                <div class="tab-pane fade" id="tabs-allTrade" role="tabpanel" aria-labelledby="tabs-allTrade-tab">
+                <div class="tab-pane fade" id="pills-allTrade" role="tabpanel" aria-labelledby="pills-allTrade-tab">
                     <h4>All Trade</h4>
                     {% if allTrade|length == 0 %}
                     <div class="alert alert-dark" role="alert">
