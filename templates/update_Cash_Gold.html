@@ -25,16 +25,33 @@
             <label class="form-check-label" for="out">Out</label>
         </div>
         <div class="input-group my-3">
-            <span class="input-group-text" id="pre-{{inpQuan}}">{{inpQuan}} {% if category == "Gold" %}&#x20B9;{% endif %}</span>
+            <span class="input-group-text" id="pre-{{inpQuan}}">{{inpQuan}} {% if category == "Gold" %}&#x20B9;{% endif
+                %}</span>
             <input type="number" class="form-control" placeholder="Enter {{inpQuan}}" aria-label="Username"
                 aria-describedby="{{inpQuan}}" step="0.001" name="{{inpQuan}}" value="{{inpQuanVal}}" required>
             <span class="input-group-text" id="post{{inpQuan}}">
                 {% if category == "Gold" %}
-                    g
+                g
                 {% else %}
-                    /-
+                /-
                 {% endif %}
             </span>
+        </div>
+        {% if category == "Cash" %}
+        <div class="mb-3">
+            <label for="cashCategory" class="form-label">Category</label>
+            <select class="form-select" aria-label="Default select example" id="cashCategory" name="cashCategory">
+                <option value="{{item.category}}" selected>{{item.category}} - Selected Previously</option>
+                {% for cat in cashCategory %}
+                <option value="{{cat}}">{{cat}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        <div class="mb-3">
+            <label for="date{{category}}" class="form-label">Enter Date</label>
+            <input type="date" class="form-control" id="date{{category}}" name="date{{category}}"
+                aria-describedby="DateField" required value="{{item.dateAdded}}">
         </div>
         <button type="submit" class="btn btn-dark">Submit</button>
     </form>

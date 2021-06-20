@@ -53,12 +53,19 @@ class Cash(db.Model):
     name = db.Column(db.String(100), nullable=False)
     inOut = db.Column(db.String(15), nullable=False)
     price = db.Column(db.FLOAT, nullable=False)
+    category = db.Column(db.String(50), nullable=False)
     dateAdded = db.Column(db.String(50), nullable=False)
 
     def __repr__(self) -> str:
         return f"{self.jewel_id} - {self.name} - {self.price}"
 
 # Routing Starts here
+# Make flask session permanent
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+
+# Error Handler
 @app.errorhandler(HTTPException)
 def handle_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
@@ -139,13 +146,18 @@ def home():
         DATA["Gold Balance"] = DATA["Gold In"] - DATA["Gold Out"]
         DATA["Cash Balance"] = DATA["Cash In"] - DATA["Cash Out"]
 
+        # Today
+        today =  datetime.now().strftime("%y-%m-%d")
+        cashCategory = config["CashCategory"]
         return render_template(
             "index.html",
             goldIn = goldIn,
             goldOut = goldOut,
             cashIn =cashIn,
             cashOut = cashOut,
-            DATA = DATA
+            DATA = DATA,
+            today = today,
+            cashCategory = cashCategory
         )
     
     else:
@@ -159,7 +171,7 @@ def addGold():
             name = request.form.get("name").title()
             inOut = request.form.get("inOut")
             weight = request.form.get("weight")
-            dateAdded = datetime.now().strftime("%d-%m-%y")
+            dateAdded = request.form.get("dateGold")
 
             # Add data to database
             gold = Gold(
@@ -185,14 +197,16 @@ def addCash():
             name = request.form.get("name").title()
             inOut = request.form.get("inOut")
             price = request.form.get("cost")
-            dateAdded = datetime.now().strftime("%d-%m-%y")
+            category = request.form.get("cashCategory")
+            dateAdded = request.form.get("dateCash")
 
             # Add data to database
             cash = Cash(
                 name = name,
                 inOut = inOut,
                 price = price,
-                dateAdded = dateAdded
+                dateAdded = dateAdded,
+                category = category
             )
 
             # Add it to db
@@ -373,6 +387,7 @@ def gold_update(id):
             name = request.form.get("name").title()
             inOut = request.form.get("inOut")
             weight = request.form.get(inpQuan)
+            dateAdded = request.form.get(f"dateGold")
 
             # Query data from form
             upGold = Gold.query.filter_by(id = id).first()
@@ -381,6 +396,7 @@ def gold_update(id):
             upGold.name = name
             upGold.inOut  = inOut
             upGold.weight = weight
+            upGold.dateAdded = dateAdded
 
             # Commit it to database
             db.session.add(upGold)
@@ -413,14 +429,18 @@ def cash_update(id):
             name = request.form.get("name").title()
             inOut = request.form.get("inOut")
             price = request.form.get(inpQuan)
+            category = request.form.get("cashCategory")
+            dateAdded = request.form.get(f"dateCash")
 
             # Query data from form
-            upCash = Gold.query.filter_by(id = id).first()
+            upCash = Cash.query.filter_by(id = id).first()
 
             # Update the data
             upCash.name = name
             upCash.inOut  = inOut
             upCash.weight = price
+            upCash.dateAdded = dateAdded
+            upCash.category = category
 
             # Commit it to database
             db.session.add(upCash)
@@ -432,14 +452,18 @@ def cash_update(id):
         cash = Cash.query.filter_by(id = id).first()
         inpQuanVal = float(cash.price) # Convert the price into float object and send it into form
 
+        # Get category of cash
+        cashCategory = config["CashCategory"]
+
         return render_template(
             "update_Cash_Gold.html",
             category = "Cash",
             id = id,
             inpQuan = inpQuan,
             inpQuanVal = inpQuanVal,
-            item = cash
-            )
+            item = cash,
+            cashCategory = cashCategory
+        )
     else:
         return redirect("/Login")
 
