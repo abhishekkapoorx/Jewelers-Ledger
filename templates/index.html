@@ -102,24 +102,24 @@
                 <h3 class="mt-5 mb-2">Your Data</h3>
                 <ul class="nav nav-pills" id="mypill" role="pilllist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="GoldIn-pill" data-bs-toggle="pill" data-bs-target="#GoldIn"
+                        <button class="nav-link active" id="GoldIn-pill" data-bs-toggle="pill" data-bs-target="#pills-GoldIn"
                             type="button" role="pill" aria-controls="GoldIn" aria-selected="true">Gold In</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="GoldOut-pill" data-bs-toggle="pill" data-bs-target="#GoldOut"
+                        <button class="nav-link" id="GoldOut-pill" data-bs-toggle="pill" data-bs-target="#pills-GoldOut"
                             type="button" role="pill" aria-controls="GoldOut" aria-selected="false">Gold Out</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="CashIn-pill" data-bs-toggle="pill" data-bs-target="#CashIn"
+                        <button class="nav-link" id="CashIn-pill" data-bs-toggle="pill" data-bs-target="#pills-CashIn"
                             type="button" role="pill" aria-controls="CashIn" aria-selected="false">Cash In</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="CashOut-pill" data-bs-toggle="pill" data-bs-target="#CashOut"
+                        <button class="nav-link" id="CashOut-pill" data-bs-toggle="pill" data-bs-target="#pills-CashOut"
                             type="button" role="pill" aria-controls="CashOut" aria-selected="false">Cash Out</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-myTabContent">
-                    <div class="tab-pane fade show active" id="GoldIn" role="tabpanel" aria-labelledby="pills-GoldIn-tab">
+                    <div class="tab-pane fade show active" id="pills-GoldIn" role="tabpanel" aria-labelledby="pills-GoldIn-tab">
                         <h4 class="my-3">Gold In</h4>
                         {% if goldIn|length == 0 %}
                         <div class="alert alert-dark" role="alert">
