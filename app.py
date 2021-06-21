@@ -118,6 +118,20 @@ def home():
         goldOut = Gold.query.filter_by(inOut = "Out").all()
         cashIn = Cash.query.filter_by(inOut = "In").all()
         cashOut = Cash.query.filter_by(inOut = "Out").all()
+        tabData = {
+            "Gold In": [
+                "goldIn", goldIn, "Gold"
+            ],
+            "Gold Out": [
+                "goldOut", goldOut, "Gold"
+            ],
+            "Cash In": [
+                "cashIn", cashIn, "Cash"
+            ],
+            "Cash Out": [
+                "cashOut", cashOut, "Cash"
+            ]
+        }
 
         # Data for balance sheet
         DATA = {
@@ -147,14 +161,11 @@ def home():
         DATA["Cash Balance"] = DATA["Cash In"] - DATA["Cash Out"]
 
         # Today
-        today =  datetime.now().strftime("%y-%m-%d")
+        today =  datetime.now().strftime("%Y-%m-%d")
         cashCategory = config["CashCategory"]
         return render_template(
             "index.html",
-            goldIn = goldIn,
-            goldOut = goldOut,
-            cashIn =cashIn,
-            cashOut = cashOut,
+            tabData = tabData,
             DATA = DATA,
             today = today,
             cashCategory = cashCategory

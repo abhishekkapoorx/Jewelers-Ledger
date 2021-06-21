@@ -13,12 +13,14 @@
         "Bracelet"
     ],
     "CashCategory": [
+        "None",
+        "Gold",
         "Silver",
         "Grocery, etc.",
         "Petrol",
         "Other Intake"
     ],
-    "local_env": false,
+    "local_env": true,
     "User_name": "Ledger 21@20 Kapoor KJ",
     "User_pass": "kj@H@br!Gd"
 }
