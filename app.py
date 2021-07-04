@@ -45,7 +45,7 @@ class Gold(db.Model):
     dateAdded = db.Column(db.String(50), nullable=False)
 
     def __repr__(self) -> str:
-        return f"{self.jewel_id} - {self.name} - {self.weight}"
+        return f"{self.id} - {self.name} - {self.weight}"
 
 # Class cash for daily incoming and outgoing cash
 class Cash(db.Model):
@@ -57,7 +57,7 @@ class Cash(db.Model):
     dateAdded = db.Column(db.String(50), nullable=False)
 
     def __repr__(self) -> str:
-        return f"{self.jewel_id} - {self.name} - {self.price}"
+        return f"{self.id} - {self.name} - {self.price}"
 
 # Routing Starts here
 # Make flask session permanent
@@ -486,6 +486,58 @@ def cash_update(id):
         )
     else:
         return redirect("/Login")
+
+@app.route("/Visualize")
+def visualize():
+    # Logic for dateChart
+    goldData = {str(i.dateAdded) for i in Gold.query.order_by(Gold.dateAdded).all()}
+    GOLDITEMS = Gold.query.all()
+    cashData = {str(i.dateAdded) for i in Cash.query.order_by(Cash.dateAdded).all()}
+    CASHITEMS = Cash.query.all()
+
+    allDates = list(goldData.union(cashData))
+    allDates.sort()
+    goldInVals = []
+    goldOutVals = []
+    cashInVals = []
+    cashOutVals = []
+    for date in allDates:
+        # Calculations for Gold
+        goldInOnDate = 0
+        goldOutOnDate = 0
+        for item in GOLDITEMS:
+            if item.dateAdded == date and item.inOut == "In":
+                goldInOnDate += item.weight
+            elif item.dateAdded == date and item.inOut == "Out":
+                goldOutOnDate += item.weight
+
+        # Calculations for cash
+        cashInOnDate = 0
+        cashOutOnDate = 0
+        for item in CASHITEMS:
+            if item.dateAdded == date and item.inOut == "In":
+                cashInOnDate += item.price
+            elif item.dateAdded == date and item.inOut == "Out":
+                cashOutOnDate += item.price
+        
+        # Append Vals to theirt Arrays
+        goldInVals.append(goldInOnDate)
+        goldOutVals.append(goldOutOnDate)
+        cashInVals.append(cashInOnDate)
+        cashOutVals.append(cashOutOnDate)
+
+    dateChartData = {
+        "allDates": allDates,
+        "Gold In": [goldInVals, 'rgb(75, 192, 192)'],
+        "Gold Out": [goldOutVals, 'rgb(0, 60, 112)'],
+        "Cash In": [cashInVals, 'rgb(199, 0, 116)'],
+        "Cash Out": [cashOutVals, 'rgb(214, 68, 0)']
+    }
+    print(dateChartData)
+    return render_template(
+        "visualize.html",
+        dateChartData = dateChartData
+    )
 
 # Register Service Worker
 @app.route('/service-worker.js')

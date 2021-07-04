@@ -34,7 +34,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
         <div class="container-fluid">
             <a class="navbar-brand align-items-center" href="/">
                 <img src="{{ url_for('static', filename='img/logo-192.png') }}" alt="logo" width="24" height="24" class="d-inline-block align-items-center">
@@ -52,6 +52,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/Ledger">Ledger</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Visualize" aria-current="page" class="nav-link">Visualize</a>
                     </li>
                 </ul>
                 <div class="d-flex">

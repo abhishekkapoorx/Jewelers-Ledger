@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Visualize Data{% endblock title %}
+{% block css %}
+
+{% endblock css %}
+
+{% block body %}
+<div class="container">
+    <h2 class="display-2 my-2">Visualize Data</h2>
+    <ul class="nav nav-pills my-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pills-date-tab" data-bs-toggle="pill" data-bs-target="#pills-date"
+                type="button" role="tab" aria-controls="pills-date" aria-selected="true">Date</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-category-tab" data-bs-toggle="pill" data-bs-target="#pills-category"
+                type="button" role="tab" aria-controls="pills-category" aria-selected="false">Category</button>
+        </li>
+        <!-- <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
+                type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
+        </li> -->
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-date" role="tabpanel" aria-labelledby="pills-date-tab">
+            <canvas id="dateChart"></canvas>
+            {% if dateChartData["allDates"]|length == 0 %}
+                <div class="alert alert-dark">No Data Found!! Add Your First Data Now.</div>
+            {% else %}
+                
+            {% endif %}
+            <table class="table table-hover my-3">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Gold In</th>
+                        <th scope="col">Gold Out</th>
+                        <th scope="col">Cash In</th>
+                        <th scope="col">Cash Out</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(dateChartData["allDates"]|length) %}
+                    <tr>
+                        <th scope="row">{{dateChartData["allDates"][i] }}</th>
+                        <td>{{dateChartData["Gold In"][0][i] }}g</td>
+                        <td>{{dateChartData["Gold Out"][0][i] }}g</td>
+                        <td>&#x20B9;{{dateChartData["Cash In"][0][i] }}</td>
+                        <td>&#x20B9;{{dateChartData["Cash Out"][0][i] }}</td>
+                    </tr>  
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="pills-category" role="tabpanel" aria-labelledby="pills-category-tab">
+            <div class="alert alert-dark">Not Avaliable Work In Progress!!</div>
+            <canvas id="catChart"></canvas>
+        </div>
+        <!-- <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+
+        </div> -->
+    </div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.0/dist/chart.min.js"></script>
+<script>
+    dateChart = document.getElementById("dateChart").getContext('2d');
+    catChart = document.getElementById("catChart").getContext('2d');
+
+    datePlotChart = new Chart(dateChart, {
+        type: "line",
+        data: {
+            labels: {{ dateChartData["allDates"]| safe }},
+        datasets: [
+        {% for key, value in dateChartData.items() %}
+    {% if loop.index != 1 %}
+    {
+        label: "{{key}}",
+            data: {{ value[0] }},
+        borderwidth: 1,
+            borderColor: "{{value[1]}}",
+                fill: true,
+                    tension: 0.4
+    },
+    {% endif %}
+    {% endfor %}
+                
+            ]
+
+        }
+    });
+</script>
+{% endblock js %}
