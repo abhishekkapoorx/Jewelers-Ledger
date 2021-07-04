@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, session
+from flask import Flask, request, redirect, session, flash
 from flask.templating import render_template
 from werkzeug.exceptions import HTTPException
 from flask_sqlalchemy import SQLAlchemy
@@ -298,6 +298,8 @@ def ledger_delete(id):
         delLedger = Ledger.query.filter_by(id=id).first()
         db.session.delete(delLedger)
         db.session.commit()
+
+        flash("Ledger Item Deleted Successfully!!", "success")
         return redirect("/Ledger")
     else:
         return redirect("/Login")
@@ -308,6 +310,8 @@ def delGold(id):
         delGold = Gold.query.filter_by(id=id).first()
         db.session.delete(delGold)
         db.session.commit()
+
+        flash("Gold Item Deleted Successfully!!", "success")
         return redirect("/")
     else:
         return redirect("/Login")
@@ -318,6 +322,8 @@ def delCash(id):
         delCash = Cash.query.filter_by(id=id).first()
         db.session.delete(delCash)
         db.session.commit()
+
+        flash("Cash Item Deleted Successfully!!", "success")
         return redirect("/")
     else:
         return redirect("/Login")
@@ -370,6 +376,7 @@ def ledger_update(id):
             db.session.commit()
 
             # Redirects to home
+            flash("Ledger Updated Successfully!!", "success")
             return redirect("/Ledger")
 
         goldItems = config["goldSubcategory"]
@@ -413,6 +420,7 @@ def gold_update(id):
             db.session.add(upGold)
             db.session.commit()
 
+            flash("Gold Item Updated Successfully!!", "success")
             return redirect("/")
 
         # Send data from database into form
@@ -457,6 +465,7 @@ def cash_update(id):
             db.session.add(upCash)
             db.session.commit()
 
+            flash("Cash Item Updated Successfully!!", "success")
             return redirect("/")
 
         # Send data from database into form
