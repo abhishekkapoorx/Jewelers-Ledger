@@ -165,7 +165,7 @@
 
                                         <td>{{item.dateAdded}}</td>
                                         <td class="toggleHide-300px toggleHide-500px">
-                                            <a href="/{{ data[2] }}/delete/{{item.id}}" class="btn btn-danger mx-1 my-1">
+                                            <a href="/{{ data[2] }}/delete/{{item.id}}" class="btn btn-danger mx-1 my-1" onclick="warnUserDel()">
                                                 Delete
                                             </a>
                                             <a href="/{{ data[2] }}/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
@@ -201,5 +201,10 @@
             else if (document.getElementById("col-Cash-Balance").innerHTML > 0) {
                 document.getElementById("row-Cash-Balance").setAttribute("class", "table-success");
             };
+
+            function warnUserDel(){
+                warnUsr = confirm("Do you really want to Delete this Item?")
+                console.log(warnUsr)
+            }
         </script>
         {% endblock js %}

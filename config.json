@@ -1,4 +1,5 @@
 {
+    "local_env": true,
     "name": "Kapoor Jewellers",
     "goldSubcategory": [
         "Ring",
@@ -20,7 +21,6 @@
         "Petrol",
         "Other Intake"
     ],
-    "local_env": false,
     "User_name": "Ledger 21@20 Kapoor KJ",
     "User_pass": "kj@H@br!Gd"
 }

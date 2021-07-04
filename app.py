@@ -449,7 +449,7 @@ def cash_update(id):
             # Update the data
             upCash.name = name
             upCash.inOut  = inOut
-            upCash.weight = price
+            upCash.price = price
             upCash.dateAdded = dateAdded
             upCash.category = category
 
