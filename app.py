@@ -491,18 +491,25 @@ def cash_update(id):
 def visualize():
     if 'user' in session and session['user'] == config["User_name"]:
         # Logic for dateChart
-        goldData = {str(i.dateAdded) for i in Gold.query.order_by(Gold.dateAdded).all()}
+
+        # Get Dates for gold and cash separately
+        goldDate = list({str(i.dateAdded) for i in Gold.query.order_by(Gold.dateAdded).all()})
         GOLDITEMS = Gold.query.all()
-        cashData = {str(i.dateAdded) for i in Cash.query.order_by(Cash.dateAdded).all()}
+        cashDate = list({str(i.dateAdded) for i in Cash.query.order_by(Cash.dateAdded).all()})
         CASHITEMS = Cash.query.all()
 
-        allDates = list(goldData.union(cashData))
-        allDates.sort()
+        # allDates = list(goldDate.union(cashDate))
+        # allDates.sort()
+
+        # Sort The Data
+        goldDate.sort()
+        cashDate.sort()
+
         goldInVals = []
         goldOutVals = []
         cashInVals = []
         cashOutVals = []
-        for date in allDates:
+        for date in goldDate:
             # Calculations for Gold
             goldInOnDate = 0
             goldOutOnDate = 0
@@ -512,6 +519,11 @@ def visualize():
                 elif item.dateAdded == date and item.inOut == "Out":
                     goldOutOnDate += item.weight
 
+            # Append Vals to their Arrays
+            goldInVals.append(goldInOnDate)
+            goldOutVals.append(goldOutOnDate)
+
+        for date in cashDate:
             # Calculations for cash
             cashInOnDate = 0
             cashOutOnDate = 0
@@ -521,18 +533,21 @@ def visualize():
                 elif item.dateAdded == date and item.inOut == "Out":
                     cashOutOnDate += item.price
             
-            # Append Vals to theirt Arrays
-            goldInVals.append(goldInOnDate)
-            goldOutVals.append(goldOutOnDate)
+            # Append Vals to their Arrays
             cashInVals.append(cashInOnDate)
             cashOutVals.append(cashOutOnDate)
 
         dateChartData = {
-            "allDates": allDates,
-            "Gold In": [goldInVals, 'rgb(75, 192, 192)'],
-            "Gold Out": [goldOutVals, 'rgb(0, 60, 112)'],
-            "Cash In": [cashInVals, 'rgb(199, 0, 116)'],
-            "Cash Out": [cashOutVals, 'rgb(214, 68, 0)']
+            "Gold": {
+                "date": goldDate,
+                "Gold In": [goldInVals, 'rgb(75, 192, 192)'],
+                "Gold Out": [goldOutVals, 'rgb(255, 182, 87)']
+            },
+            "Cash": {
+                "date": cashDate,
+                "Cash In": [cashInVals, 'rgb(75, 192, 192)'],
+                "Cash Out": [cashOutVals, 'rgb(255, 182, 87)']
+            }
         }
         return render_template(
             "visualize.html",

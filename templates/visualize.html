@@ -3,7 +3,11 @@
 {% block css %}
 
 {% endblock css %}
-
+<!-- <style>
+    body{
+        background-color: rgb(255, 182, 87);
+    }
+</style> -->
 {% block body %}
 <div class="container">
     <h2 class="display-2 my-2">Visualize Data</h2>
@@ -23,34 +27,73 @@
     </ul>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-date" role="tabpanel" aria-labelledby="pills-date-tab">
-            <canvas id="dateChart"></canvas>
-            {% if dateChartData["allDates"]|length == 0 %}
-                <div class="alert alert-dark">No Data Found!! Add Your First Data Now.</div>
-            {% else %}
-                
-            {% endif %}
-            <table class="table table-hover my-3">
-                <thead>
-                    <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Gold In</th>
-                        <th scope="col">Gold Out</th>
-                        <th scope="col">Cash In</th>
-                        <th scope="col">Cash Out</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for i in range(dateChartData["allDates"]|length) %}
-                    <tr>
-                        <th scope="row">{{dateChartData["allDates"][i] }}</th>
-                        <td>{{dateChartData["Gold In"][0][i] }}g</td>
-                        <td>{{dateChartData["Gold Out"][0][i] }}g</td>
-                        <td>&#x20B9;{{dateChartData["Cash In"][0][i] }}</td>
-                        <td>&#x20B9;{{dateChartData["Cash Out"][0][i] }}</td>
-                    </tr>  
-                    {% endfor %}
-                </tbody>
-            </table>
+
+            <!-- Tab for Gold And Cash Chart -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="Gold-tab" data-bs-toggle="tab" data-bs-target="#Gold" type="button" role="tab" aria-controls="Gold" aria-selected="true">Gold</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="Cash-tab" data-bs-toggle="tab" data-bs-target="#Cash" type="button" role="tab" aria-controls="Cash" aria-selected="false">Cash</button>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="Gold" role="tabpanel" aria-labelledby="Gold-tab">
+                    <canvas id="goldDateChart" class="my-3"></canvas>
+
+                    <!-- Table for data showing -->
+                    {% if dateChartData["Gold"]["date"]|length == 0 %}
+                        <div class="alert alert-dark">No Data Found!! Add Your First Data Now.</div>
+                    {% else %}
+                    <table class="table table-hover my-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Gold In</th>
+                                <th scope="col">Gold Out</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in range(dateChartData["Gold"]["date"]|length) %}
+                            <tr>
+                                <th scope="row">{{dateChartData["Gold"]["date"][i] }}</th>
+                                <td>{{dateChartData["Gold"]["Gold In"][0][i] }}g</td>
+                                <td>{{dateChartData["Gold"]["Gold Out"][0][i] }}g</td>
+                            </tr>  
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+                <div class="tab-pane fade" id="Cash" role="tabpanel" aria-labelledby="Cash-tab">
+                    <canvas id="cashDateChart" class="my-3"></canvas>
+
+                    <!-- Table for data showing -->
+                    <!-- Table of Gold and Cash -->
+                    {% if dateChartData["Gold"]["date"]|length == 0 and dateChartData["Cash"]["date"]|length == 0 %}
+                        <div class="alert alert-dark">No Data Found!! Add Your First Data Now.</div>
+                    {% else %}
+                    <table class="table table-hover my-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Cash In</th>
+                                <th scope="col">Cash Out</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in range(dateChartData["Cash"]["date"]|length) %}
+                            <tr>
+                                <th scope="row">{{dateChartData["Cash"]["date"][i] }}</th>
+                                <td>&#x20B9;{{dateChartData["Cash"]["Cash In"][0][i] }}</td>
+                                <td>&#x20B9;{{dateChartData["Cash"]["Cash Out"][0][i] }}</td>
+                            </tr>  
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+            </div>
         </div>
         <div class="tab-pane fade" id="pills-category" role="tabpanel" aria-labelledby="pills-category-tab">
             <div class="alert alert-dark">Not Avaliable Work In Progress!!</div>
@@ -66,29 +109,48 @@
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.0/dist/chart.min.js"></script>
 <script>
-    dateChart = document.getElementById("dateChart").getContext('2d');
-    catChart = document.getElementById("catChart").getContext('2d');
+    goldDateChart = document.getElementById("goldDateChart").getContext('2d');
+    cashDateChart = document.getElementById("cashDateChart").getContext('2d');
 
-    datePlotChart = new Chart(dateChart, {
+    goldDatePlotChart = new Chart(goldDateChart, {
         type: "line",
         data: {
-            labels: {{ dateChartData["allDates"]| safe }},
-        datasets: [
-        {% for key, value in dateChartData.items() %}
-    {% if loop.index != 1 %}
-    {
-        label: "{{key}}",
-            data: {{ value[0] }},
-        borderwidth: 1,
-            borderColor: "{{value[1]}}",
-                fill: true,
-                    tension: 0.4
-    },
-    {% endif %}
-    {% endfor %}
-                
+            labels: {{ dateChartData["Gold"]["date"]| safe }},
+            datasets: [
+                {% for key, value in dateChartData["Gold"].items() %}
+                    {% if loop.index != 1 %}
+                        {
+                            label: "{{key}}",
+                            data: {{ value[0] }},
+                            borderwidth: 1,
+                            borderColor: "{{value[1]}}",
+                            fill: false,
+                            tension: 0.4
+                        },
+                    {% endif %}
+                {% endfor %}
             ]
+        }
+    });
 
+    cashDatePlotChart = new Chart(cashDateChart, {
+        type: "line",
+        data: {
+            labels: {{ dateChartData["Cash"]["date"]| safe }},
+            datasets: [
+                {% for key, value in dateChartData["Cash"].items() %}
+                    {% if loop.index != 1 %}
+                        {
+                            label: "{{key}}",
+                            data: {{ value[0] }},
+                            borderwidth: 1,
+                            borderColor: "{{value[1]}}",
+                            fill: false,
+                            tension: 0.4
+                        },
+                    {% endif %}
+                {% endfor %}
+            ]
         }
     });
 </script>
