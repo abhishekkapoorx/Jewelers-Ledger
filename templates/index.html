@@ -1,10 +1,72 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock title %}
 {% block css %}
-
+<style>
+    .tab-modal-link{
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+    .tab-modal-link:hover{
+        color: rgb(54, 54, 54);
+    }
+</style>
 {% endblock css %}
-
+<style>
+    .nameLink{
+        color: rgb(0, 32, 44);
+        text-decoration: none;
+        transition-property: all;
+        transition-timing-function: ease-in-out;
+        transition-duration: 0.2s;
+    }
+    .nameLink:hover{
+        color: rgb(0, 61, 83);
+    }
+</style>
 {% block body %}
+<!-- Filter Modal -->
+<div class="modal fade" id="nameModal" tabindex="-1" aria-labelledby="nameModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nameModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table my-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Item</th>
+                            <th scope="col" id="item-amt-label"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" id="item-id"></th>
+                            <td id="item-name"></td>
+                            <td id="item-cat"></td>
+                            <td id="item-amt"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4 class="my-2 ">Functions:</h4>
+                <a href="" class="btn btn-dark my-2 mx-1" id="filterName"></a>
+                <a href="" class="btn btn-dark my-2 mx-1" id="updateItem">Update</a>
+            </div>
+            <div class="modal-footer">
+                <button id="" class="btn btn-danger mx-1 my-1 modal-del-btn" onclick="warnUserDel(this.id)">
+                    Delete
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container my-4">
     <h2 class="display-2">Welcome to Kapoor Jewelers</h2>
     <div class="container mt-4">
@@ -154,7 +216,7 @@
                                     {% for item in data[1] %}
                                     <tr>
                                         <th scope="row">{{loop.index}}</th>
-                                        <td>{{item.name}}</td>
+                                        <td><a class="tab-modal-link" data-bs-toggle="modal" data-bs-target="#nameModal" data-bs-id="{{item.id}}" data-bs-tab-no="{{loop.index}}" data-bs-name="{{item.name}}" data-bs-category="{{data[2]}}" data-bs-amt="{% if data[2] == "Gold" %}{{item.weight}}{% else %}{{item.price}}{% endif %}">{{item.name}}</a></td>
 
                                         {% if data[2] == "Gold" %}
                                             <td>{{item.weight}} g</td>
@@ -185,31 +247,5 @@
         {% endblock body %}
 
         {% block js %}
-        <script>
-            // Change color of Gold Balance row
-            if (document.getElementById("col-Gold-Balance").innerHTML < 0) {
-                document.getElementById("row-Gold-Balance").setAttribute("class", "table-danger");
-            }
-            else if (document.getElementById("col-Gold-Balance").innerHTML > 0) {
-                document.getElementById("row-Gold-Balance").setAttribute("class", "table-success");
-            };
-
-            // Change color of Gold Balance row
-            if (document.getElementById("col-Cash-Balance").innerHTML < 0) {
-                document.getElementById("row-Cash-Balance").setAttribute("class", "table-danger");
-            }
-            else if (document.getElementById("col-Cash-Balance").innerHTML > 0) {
-                document.getElementById("row-Cash-Balance").setAttribute("class", "table-success");
-            };
-
-            function warnUserDel(itmID){
-                warnUsr = confirm("Do you really want to Delete this Item?")
-                DelElement = document.getElementById(itmID)
-                if (warnUsr==true) {
-                    window.location.replace(itmID);
-                } else {
-                    alert("Don't Worry It's not Deleted!!");
-                };
-            };
-        </script>
+        <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
         {% endblock js %}

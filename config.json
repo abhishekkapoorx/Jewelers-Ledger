@@ -1,5 +1,5 @@
 {
-    "local_env": false,
+    "local_env": true,
     "name": "Kapoor Jewellers",
     "goldSubcategory": [
         "Ring",

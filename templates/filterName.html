@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}Filtered Data by Name: {{name}}{% endblock title %}
+{% block css %}
+
+{% endblock css %}
+
+
+{% block body %}
+<div class="container">
+    <h3 class="display-3">Filtered Data by <strong>Name: {{name}}</strong></h3>
+
+    <div class="container my-4">
+        <ul class="nav nav-pills" id="mypill" role="pilllist">
+            {% for tag, data in tabData.items() %}
+            <li class="nav-item" role="presentation">
+                <button class="nav-link {% if loop.index0 == 0 %}active{% endif %}" id="{{data[0]}}-pill"
+                    data-bs-toggle="pill" data-bs-target="#pills-{{data[0]}}" type="button" role="pill"
+                    aria-controls="{{data[0]}}"
+                    aria-selected="{% if loop.index0 == 0 %}true{% else %}false{% endif %}">{{tag}}</button>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="tab-content" id="pills-myTabContent">
+            {% for tag, data in tabData.items() %}
+            <div class="tab-pane fade {% if loop.index0 == 0 %}show active{% endif %}" id="pills-{{ data[0] }}"
+                role="tabpanel" aria-labelledby="pills-{{ data[0] }}-tab">
+                <h4 class="my-3">{{tag}}</h4>
+                {% if data[1]|length == 0 %}
+                <div class="alert alert-dark" role="alert">
+                    There is no data. Add your first data now!!
+                </div>
+                {% else %}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            {% if data[2] == "Gold" %}
+                            <th scope="col">Weight</th>
+                            {% else %}
+                            <th scope="col">Amount</th>
+                            <th scope="col" class="toggleHide-300px toggleHide-500px">Category</th>
+                            {% endif %}
+                            <th scope="col">Date</th>
+                            <th scope="col" class="toggleHide-300px toggleHide-500px">Operations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in data[1] %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td>{{item.name}}</td>
+
+                            {% if data[2] == "Gold" %}
+                            <td>{{item.weight}} g</td>
+                            {% else %}
+                            <td>&#x20B9; {{item.price}}</td>
+                            <td class="toggleHide-300px toggleHide-500px">{{item.category}}</td>
+                            {% endif %}
+
+                            <td>{{item.dateAdded}}</td>
+                            <td class="toggleHide-300px toggleHide-500px">
+                                <button id="/{{ data[2] }}/delete/{{item.id}}" class="btn btn-danger mx-1 my-1"
+                                    onclick="warnUserDel(this.id)">
+                                    Delete
+                                </button>
+                                <a href="/{{ data[2] }}/update/{{item.id}}" class="btn btn-dark mx-1 my-1">
+                                    Update
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock js %}

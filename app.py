@@ -549,12 +549,70 @@ def visualize():
                 "Cash Out": [cashOutVals, 'rgb(255, 182, 87)']
             }
         }
+
+        # CategoryChart Starts Here
+        cashCatIn = {}
+        for cat in config["CashCategory"]:
+            catQuery = Cash.query.filter_by(category=cat, inOut="In").all()
+            price = 0
+            for item in catQuery:
+                price += item.price
+            cashCatIn.update({f"{cat}": [catQuery, price]})
+
+        cashCatOut = {}
+        for cat in config["CashCategory"]:
+            catQuery = Cash.query.filter_by(category=cat, inOut="In").all()
+            price = 0
+            for item in catQuery:
+                price += item.price
+            cashCatOut.update({f"{cat}": [catQuery, price]})
+        
+        cashCat = {
+            "Cash In": cashCatIn,
+            "Cash Out": cashCatOut
+        }
+        # print(f"\n\t{cashCat}\n")
+
         return render_template(
             "visualize.html",
             dateChartData = dateChartData
         )
     else:
         redirect("/Login")
+
+
+# Filter Logic Here
+@app.route("/Filter/Name/<string:name>")
+def filterName(name):
+    if 'user' in session and session['user'] == config["User_name"]:
+        goldIn = Gold.query.filter_by(name=name, inOut = "In").all()
+        goldOut = Gold.query.filter_by(name=name, inOut = "Out").all()
+        cashIn = Cash.query.filter_by(name=name, inOut = "In").all()
+        cashOut = Cash.query.filter_by(name=name, inOut = "Out").all()
+        
+        tabData = {
+                "Gold In": [
+                    "goldIn", goldIn, "Gold"
+                ],
+                "Gold Out": [
+                    "goldOut", goldOut, "Gold"
+                ],
+                "Cash In": [
+                    "cashIn", cashIn, "Cash"
+                ],
+                "Cash Out": [
+                    "cashOut", cashOut, "Cash"
+                ]
+            }
+
+        return render_template(
+            'filterName.html',
+            name=name,
+            tabData = tabData
+        )
+    else:
+        return redirect("/Login")
+
 
 # Register Service Worker
 @app.route('/service-worker.js')
