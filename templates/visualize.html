@@ -94,12 +94,45 @@
             </div>
         </div>
         <div class="tab-pane fade" id="pills-category" role="tabpanel" aria-labelledby="pills-category-tab">
-            <div class="alert alert-dark">Not Avaliable Work In Progress!!</div>
-            <canvas id="catChart"></canvas>
-        </div>
-        <!-- <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+            
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                {% for key, value in cashCat.items() %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link {% if loop.index == 1 %}active{% endif %}" id="home-tab" data-bs-toggle="tab" data-bs-target="#{{key|replace(" ", "")}}"
+                        type="button" role="tab" aria-controls="{{key|replace(" ", "")}}"
+                        aria-selected="{% if loop.index == 1 %}true{% else %}false{% endif %}">{{key}}</button>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                {% for key, value in cashCat.items() %}
+                <div class="tab-pane fade {% if loop.index == 1 %}show active{% endif %}" id="{{key|replace(" ", "")}}" role="tabpanel" aria-labelledby="{{key|replace(" ", "")}}-tab">
 
-        </div> -->
+                    <canvas id="{{key|replace(" ", "-")}}"></canvas>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Category</th>   
+                                <th scope="col">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cat, price in value.items() %}
+                            <tr>
+                                <th scope="row">{{cat}}</th>
+                                <td>&#x20B9;{{price}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+
+
+
+        </div>
     </div>
 </div>
 {% endblock body %}
@@ -169,6 +202,111 @@
                         },
                     {% endif %}
                 {% endfor %}
+            ]
+        },
+        options: {
+            plugins: {
+                zoom:{
+                    zoom: {
+                        wheel: {
+                            enabled: true,
+                        },
+                        pinch: {
+                            enabled: true,
+                        },
+                        mode: 'xy',
+                    },
+                    pan: {
+                        enabled: true,
+                        mode: "xy",
+                    }
+                }
+            }
+        }
+    });
+
+    cashCatIn = document.getElementById("Cash-In").getContext('2d')
+    cashCatOut = document.getElementById("Cash-Out").getContext('2d')
+
+    CashCatPlotChart_IN = new Chart(cashCatIn, {
+        type: "bar",
+        data: {
+            labels: {{ categories|safe }},
+            datasets: [
+                {
+                    label: "Cash In",
+                    data: {{ prices_cat[0] }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)'
+                        ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)'
+                        ],
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            plugins: {
+                zoom:{
+                    zoom: {
+                        wheel: {
+                            enabled: true,
+                        },
+                        pinch: {
+                            enabled: true,
+                        },
+                        mode: 'xy',
+                    },
+                    pan: {
+                        enabled: true,
+                        mode: "xy",
+                    }
+                }
+            }
+        }
+    });
+
+    CashCatPlotChart_OUT = new Chart(cashCatOut, {
+        type: "bar",
+        data: {
+            labels: {{ categories|safe }},
+            datasets: [
+                {
+                    label: "Cash Out",
+                    data: {{ prices_cat[1] }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)'
+                        ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)'
+                        ],
+                    borderWidth: 1
+                }
             ]
         },
         options: {

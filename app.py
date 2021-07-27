@@ -554,30 +554,31 @@ def visualize():
 
         # CategoryChart Starts Here
         cashCatIn = {}
-        for cat in config["CashCategory"]:
-            catQuery = Cash.query.filter_by(category=cat, inOut="In").all()
-            price = 0
-            for item in catQuery:
-                price += item.price
-            cashCatIn.update({f"{cat}": [catQuery, price]})
-
         cashCatOut = {}
         for cat in config["CashCategory"]:
-            catQuery = Cash.query.filter_by(category=cat, inOut="In").all()
-            price = 0
-            for item in catQuery:
-                price += item.price
-            cashCatOut.update({f"{cat}": [catQuery, price]})
+            catQuery_in = Cash.query.filter_by(category=cat, inOut="In").all()
+            price_in = 0
+            for item in catQuery_in:
+                price_in += item.price
+            cashCatIn.update({f"{cat}": price_in})
+
+            catQuery_out = Cash.query.filter_by(category=cat, inOut="Out").all()
+            price_out = 0
+            for item in catQuery_out:
+                price_out += item.price
+            cashCatOut.update({f"{cat}": price_out})
         
         cashCat = {
             "Cash In": cashCatIn,
             "Cash Out": cashCatOut
         }
-        # print(f"\n\t{cashCat}\n")
 
         return render_template(
             "visualize.html",
-            dateChartData = dateChartData
+            dateChartData = dateChartData,
+            cashCat = cashCat,
+            categories = config["CashCategory"],
+            prices_cat = [list(cashCatIn.values()), list(cashCatOut.values())]
         )
     else:
         redirect("/Login")
@@ -587,10 +588,43 @@ def visualize():
 @app.route("/Filter/Name/<string:name>")
 def filterName(name):
     if 'user' in session and session['user'] == config["User_name"]:
-        goldIn = Gold.query.filter_by(name=name, inOut = "In").all()
-        goldOut = Gold.query.filter_by(name=name, inOut = "Out").all()
-        cashIn = Cash.query.filter_by(name=name, inOut = "In").all()
-        cashOut = Cash.query.filter_by(name=name, inOut = "Out").all()
+        name = name
+        gold = Gold.query.order_by(Gold.name).all()
+        cash = Cash.query.order_by(Cash.name).all()
+
+        goldIn = []
+        goldOut = []
+        cashIn = []
+        cashOut = []
+
+        def removePunc(string):
+            punc = '''!()-[]{};:'"\,<>./?@#$%^&*_~ '''
+            analized = ""
+            for char in string:
+                if char not in punc:
+                    analized += char
+            return analized
+
+        name_copy = removePunc(str(name).lower())
+        
+        # filter by name in gold and separate it out
+        for goldItem in gold:
+            item = removePunc(str(goldItem.name).lower())
+            if name_copy == item:
+                if goldItem.inOut == "In":
+                    goldIn.append(goldItem)
+                elif goldItem.inOut == "Out":
+                    goldOut.append(goldItem)
+        
+        # filter by name in cash and separate it out
+        for cashItem in cash:
+            item = removePunc(str(cashItem.name).lower())
+            if name_copy == item:
+                if cashItem.inOut == "In":
+                    cashIn.append(cashItem)
+                elif cashItem.inOut == "Out":
+                    cashOut.append(cashItem)
+            
         
         tabData = {
                 "Gold In": [
