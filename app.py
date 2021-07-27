@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 import os
 from datetime import datetime
+import hashlib
 
 app = Flask(__name__)
 
@@ -88,7 +89,8 @@ def login():
 
     if request.method=='POST':
         username = request.form.get('uname')
-        userpass = request.form.get('pass')
+        userpass = hashlib.sha512(request.form.get('pass').encode("utf-8")).hexdigest()
+
         if username == config['User_name'] and userpass == config['User_pass']:
             # set session variable
             session['user'] = username
